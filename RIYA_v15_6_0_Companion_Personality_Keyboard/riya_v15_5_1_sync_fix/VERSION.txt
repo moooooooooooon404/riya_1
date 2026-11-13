@@ -1,0 +1,6 @@
+RIYA v15.6.0 — Companion Personality & Keyboard Composer
+Build date: 2026-11-12
+Adds a more natural, consistent companion voice while preserving task extraction and scheduling instructions.
+Reinforces the four user-defined categories and gradual, evidence-based preference learning without interrupting task capture.
+Composer: Enter sends; Shift+Enter inserts a newline.
+Based on v15.5.1 conflict recovery.

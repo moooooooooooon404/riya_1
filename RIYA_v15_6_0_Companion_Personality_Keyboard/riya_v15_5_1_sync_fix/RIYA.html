@@ -1,0 +1,656 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="theme-color" content="#171127"><title>RIYA — Local AI Personal Assistant</title>
+<style>
+:root{--bg:#171127;--card:#211a38;--ink:#f5f0ff;--mut:#b9addb;--p:#9b7cff;--pl:#392d62;--ln:#443568;--green:#73d6a2;--greenbg:#173d35;--amber:#ffbd75;--amberbg:#49301f;--red:#ff8da5;--redbg:#482333;--blue:#9dbaff;--bluebg:#26365a;--shadow:0 8px 24px rgba(0,0,0,.22);color-scheme:dark}
+*{box-sizing:border-box}html,body{margin:0;min-height:100%;background:var(--bg);color:var(--ink);font:15px/1.45 system-ui,-apple-system,"Segoe UI",sans-serif}button,input,select,textarea{font:inherit}button{cursor:pointer;color:inherit;border:0}.app{width:100%;max-width:480px;min-height:100dvh;margin:auto;background:linear-gradient(180deg,var(--bg),#fff 120%);display:flex;flex-direction:column;position:relative;overflow:hidden}.header{padding:17px 19px 10px;display:flex;align-items:center;justify-content:space-between;position:sticky;top:0;background:#f4f0ffee;backdrop-filter:blur(12px);z-index:3}.brand{display:flex;align-items:center;gap:10px;font-weight:850;letter-spacing:1.5px}.logo{width:38px;height:38px;border-radius:14px;background:linear-gradient(135deg,#9279ff,#6046d0);display:grid;place-items:center;color:#fff;font-size:19px;box-shadow:var(--shadow)}.subbrand{font-size:9px;letter-spacing:1.4px;color:var(--mut);font-weight:650}.status{font-size:10px;padding:6px 10px;border-radius:99px;background:var(--greenbg);color:var(--green);font-weight:750}.screen{flex:1;padding:10px 17px 28px;overflow:auto}.screen h1{font-size:25px;line-height:1.2;margin:8px 0 5px}.screen h2{font-size:17px;margin:20px 0 10px}.sub{color:var(--mut);margin:0 0 15px;font-size:13px}.muted{color:var(--mut)}.small{font-size:11px;color:var(--mut)}.card{background:var(--card);border:1px solid var(--ln);border-radius:19px;padding:14px;margin:0 0 11px;box-shadow:var(--shadow)}.hero{background:linear-gradient(135deg,#9279ff,#694ed9);color:#fff;border-radius:23px;padding:18px;margin:8px 0 15px;box-shadow:0 12px 28px #765ce94a}.hero .sub,.hero .small{color:#eee8ff}.hero h2{font-size:20px;margin:5px 0}.row{display:flex;align-items:center;gap:8px}.between{justify-content:space-between}.grid2{display:grid;grid-template-columns:1fr 1fr;gap:9px}.stat{padding:13px;border-radius:16px;background:#fff;border:1px solid var(--ln)}.stat strong{font-size:23px;display:block}.btn{background:var(--p);color:#fff;border-radius:13px;padding:11px 14px;font-weight:750;box-shadow:var(--shadow)}.btn.secondary{background:var(--pl);color:var(--p);box-shadow:none}.btn.ghost{background:#fff;border:1px solid var(--ln);color:var(--ink);box-shadow:none}.btn.danger{background:var(--redbg);color:var(--red);box-shadow:none}.btn:disabled{opacity:.45;cursor:not-allowed}.full{width:100%}.iconbtn{width:35px;height:35px;border-radius:11px;background:var(--pl);color:var(--p);font-size:17px}.pill{display:inline-flex;align-items:center;border-radius:99px;padding:4px 9px;background:var(--pl);color:var(--p);font-size:10px;font-weight:750}.pill.high{background:var(--redbg);color:var(--red)}.pill.medium{background:var(--amberbg);color:var(--amber)}.pill.low{background:var(--greenbg);color:var(--green)}.pill.fixed{background:var(--bluebg);color:var(--blue)}.field{display:block;width:100%;border:1.5px solid var(--ln);background:#fff;border-radius:12px;padding:11px 12px;margin:5px 0 12px;color:var(--ink);outline:none}.field:focus{border-color:var(--p);box-shadow:0 0 0 3px #7c5cff1b}label{font-size:12px;font-weight:700;color:#55496e;display:block}.formgrid{display:grid;grid-template-columns:1fr 1fr;gap:0 10px}.formgrid .wide{grid-column:1/-1}.hint{font-size:11px;color:var(--mut);margin:-7px 0 10px}.taskrow{display:flex;align-items:flex-start;gap:10px;padding:12px 0;border-bottom:1px solid var(--ln)}.taskrow:last-child{border-bottom:0}.taskmain{flex:1;min-width:0}.tasktitle{font-weight:750;overflow-wrap:anywhere}.taskmeta{font-size:11px;color:var(--mut);margin-top:3px}.check{width:22px;height:22px;flex:none;border:1.5px solid #b7abcF;border-radius:7px;background:#fff;color:#fff}.check.done{background:#45b98c;border-color:#45b98c}.strike{text-decoration:line-through;opacity:.55}.empty{text-align:center;color:var(--mut);padding:24px 12px}.empty .symbol{font-size:30px;margin-bottom:5px}.tabs{display:grid;grid-template-columns:repeat(6,1fr);gap:3px;padding:9px 9px calc(10px + env(safe-area-inset-bottom));border-top:1px solid var(--ln);background:#fff;position:sticky;bottom:0;z-index:3}.tabs button{padding:7px 2px;border-radius:12px;background:transparent;color:var(--mut);font-size:10px}.tabs button span{display:block;font-size:19px;margin-bottom:2px}.tabs button.active{background:var(--pl);color:var(--p);font-weight:800}.toolbar{display:flex;gap:7px;flex-wrap:wrap;margin:8px 0 12px}.toolbar .field{margin:0;flex:1;min-width:120px}.timeline{display:grid;grid-template-columns:62px 1fr;gap:8px;margin:9px 0}.timeline .time{font-size:11px;color:var(--mut);padding-top:12px;text-align:right}.event{border-left:4px solid var(--p);padding:10px 12px;border-radius:12px;background:#fff;border-top:1px solid var(--ln);border-right:1px solid var(--ln);border-bottom:1px solid var(--ln)}.event.fixed{border-left-color:var(--blue)}.event.done{opacity:.6}.calendar{display:grid;grid-template-columns:repeat(7,1fr);gap:5px;text-align:center}.calday{min-height:42px;border:1px solid var(--ln);border-radius:11px;background:#fff;position:relative;padding:7px 2px;font-size:12px}.calday.today{border-color:var(--p);font-weight:850}.calday.selected{background:var(--p);color:#fff}.calday .dot{width:5px;height:5px;border-radius:50%;background:#9279ff;position:absolute;bottom:4px;left:calc(50% - 2px)}.calday.selected .dot{background:#fff}.weekday{font-size:10px;color:var(--mut);padding:5px 0}.progress{height:8px;border-radius:99px;background:var(--ln);overflow:hidden}.progress i{display:block;height:100%;background:linear-gradient(90deg,#b49cff,var(--p))}.sectionhead{display:flex;align-items:center;justify-content:space-between;margin:18px 0 9px}.sectionhead h2{margin:0}.seg{display:flex;gap:5px;background:var(--pl);padding:4px;border-radius:12px}.seg button{padding:7px 10px;border-radius:9px;color:var(--mut);font-size:11px}.seg button.active{background:#fff;color:var(--p);font-weight:800;box-shadow:0 2px 6px #4a36851a}.notice{padding:11px 12px;border-radius:13px;background:var(--amberbg);color:var(--amber);font-size:12px;margin-bottom:10px}.success{background:var(--greenbg);color:var(--green)}.dangertext{background:var(--redbg);color:var(--red)}.modalback{position:fixed;inset:0;background:#20163d77;z-index:10;display:flex;align-items:flex-end;justify-content:center}.modal{width:min(480px,100%);max-height:90dvh;overflow:auto;background:var(--bg);border-radius:24px 24px 0 0;padding:17px 17px calc(22px + env(safe-area-inset-bottom));box-shadow:0 -10px 40px #241b3d33}.modalhead{display:flex;align-items:center;justify-content:space-between;margin-bottom:12px}.modalhead h2{margin:0}.actions{display:flex;gap:8px;flex-wrap:wrap;margin-top:10px}.actions>*{flex:1}.toast{position:fixed;left:20px;right:20px;bottom:82px;max-width:440px;margin:auto;background:var(--ink);color:white;padding:11px 14px;border-radius:13px;z-index:20;opacity:0;transform:translateY(8px);transition:.2s;pointer-events:none}.toast.show{opacity:1;transform:none}.historyitem{border-left:3px solid var(--pl);padding:7px 0 7px 12px;margin:8px 0}.switch{appearance:none;width:40px;height:23px;border-radius:99px;background:#d8d0e9;position:relative;cursor:pointer;vertical-align:middle}.switch:checked{background:var(--p)}.switch:before{content:"";position:absolute;width:17px;height:17px;left:3px;top:3px;border-radius:50%;background:#fff;transition:.15s}.switch:checked:before{left:20px}.footnote{font-size:10px;color:var(--mut);line-height:1.4}.hidden{display:none!important}@media(min-width:600px){body{padding:18px 0}.app{min-height:calc(100dvh - 36px);max-height:960px;border:8px solid var(--ink);border-radius:32px;box-shadow:0 20px 60px #5a3cb344}.header{border-radius:24px 24px 0 0}}
+
+/* RIYA minimal dark-indigo redesign */
+html,body{background:#171127;color:var(--ink)}
+.app{max-width:440px;min-height:100dvh;background:linear-gradient(180deg,#171127 0%,#211936 100%);border-left:1px solid #33284f;border-right:1px solid #33284f}
+.header{background:#171127;border-bottom:1px solid #33284f;padding:16px 20px 12px}
+.brand{gap:11px}.logo{background:#392d62;color:#b49aff;border-radius:13px}
+.subbrand{color:#a99bc9}.status{background:#2c2445;color:#c7b5ff;border:1px solid #4b3c70}
+.screen{padding:18px 18px 30px}
+.screen h1{font-size:25px;letter-spacing:-.35px;color:#fff}
+.screen h2{color:#f5f0ff}
+.sub,.small,.footnote{color:#b9addb}
+.card,.stat,.historyitem,.event,.modal,.taskrow,.timeline{background:#241d3b;border-color:#443568;color:#f5f0ff;box-shadow:0 6px 18px rgba(0,0,0,.14)}
+.field, input,select,textarea{background:#211a38!important;color:#f5f0ff!important;border:1px solid #493b70!important;border-radius:13px}
+.field::placeholder,textarea::placeholder{color:#8f82b2}
+.btn{background:#9274f6;color:#fff;border-radius:14px;font-weight:700}
+.btn.secondary,.btn.ghost,.iconbtn{background:#392d62;color:#c8b5ff;border:1px solid #514078}
+.pill{background:#392d62;color:#d8caff}
+.tabs{background:#171127;border-top:1px solid #3a2e59}
+.tabs button{color:#a99bc9}.tabs button.active{color:#b49aff}
+.tabs button.active:before{background:#9b7cff}
+.calday{background:#211a38;color:#d9cff5;border-color:#443568}
+.calday.today,.calday.selected{background:#7055c5;color:white;border-color:#9b7cff}
+.weekday{color:#a99bc9}
+.hero{background:linear-gradient(135deg,#8e6df0,#6848d7);border-radius:22px;box-shadow:0 10px 25px rgba(0,0,0,.2)}
+.empty{background:#211a38;border:1px dashed #514078}
+.modalback{background:rgba(8,5,18,.78)}.modal{background:#211a38}
+label{color:#c9bce7}
+a{color:#b49aff}
+@media(min-width:600px){.app{margin:18px auto;min-height:calc(100dvh - 36px);border:1px solid #443568;border-radius:28px;overflow:hidden}.tabs{border-radius:0 0 28px 28px}}
+
+/* My Tasks: date-and-day grouping inspired by the supplied reference */
+.tasks-heading{display:flex;align-items:flex-start;justify-content:space-between;gap:12px;margin:8px 0 22px}
+.tasks-heading h1{margin:0 0 7px;font-size:29px}
+.tasks-heading .sub{margin:0;max-width:300px}
+.add-task-btn{white-space:nowrap;padding:13px 17px}
+.tasks-search{margin:0 0 14px}
+.tasks-table{border:1px solid #443568;border-radius:20px;overflow:hidden;background:#1d1731}
+.tasks-table-head{display:grid;grid-template-columns:36% 64%;background:#392d62;color:#f4efff;font-weight:750;padding:15px 16px;font-size:14px}
+.task-date-group{display:grid;grid-template-columns:36% 64%;border-top:1px solid #443568;padding:10px;gap:8px;align-items:stretch}
+.task-date-cell{background:#2b2247;border:1px solid #493b70;border-radius:16px;padding:14px 12px;display:flex;flex-direction:column;justify-content:center;gap:5px;min-width:0}
+.task-date-cell strong{font-size:15px;color:#fff}
+.task-date-cell span{font-size:13px;color:#a98aff;font-weight:650}
+.task-group-items{display:flex;flex-direction:column;gap:5px;min-width:0}
+.task-list-item{display:grid;grid-template-columns:9px minmax(70px,auto) minmax(0,1fr) auto;align-items:center;gap:8px;width:100%;text-align:left;background:#241d3b;border:1px solid #34294f;border-radius:14px;padding:11px 9px;color:#f5f0ff;min-height:54px}
+.task-list-item:active{background:#30264d}
+.task-dot{width:8px;height:8px;border-radius:50%;background:#9b7cff}
+.task-time{font-size:12px;font-weight:700;color:#eee8ff;background:#3a3154;border-radius:20px;padding:5px 8px;white-space:nowrap}
+.task-title{font-size:13px;font-weight:650;line-height:1.3;overflow-wrap:anywhere}
+.task-list-item .pill{font-size:11px;padding:5px 8px;white-space:nowrap}
+.tasks-calendar-btn{margin-top:22px;min-height:58px;font-size:16px}
+@media(max-width:380px){.tasks-table-head,.task-date-group{grid-template-columns:34% 66%}.task-date-group{padding:7px;gap:6px}.task-date-cell{padding:10px 8px}.task-date-cell strong{font-size:13px}.task-date-cell span{font-size:11px}.task-list-item{grid-template-columns:7px 1fr auto;gap:6px;padding:9px 7px}.task-time{grid-column:2;font-size:11px;justify-self:start}.task-title{grid-column:2;grid-row:2}.task-list-item .pill{grid-column:3;grid-row:1/3}.task-dot{grid-row:1/3}}
+
+.tabs{grid-template-columns:repeat(5,minmax(0,1fr))}.tabs button{font-size:10px;white-space:nowrap}
+
+.schedule-table{width:100%;border-collapse:collapse;min-width:620px;margin:8px 0 2px;font-size:13px}
+.schedule-table th,.schedule-table td{text-align:left;padding:10px 11px;border-bottom:1px solid #493b70;vertical-align:top}
+.schedule-table th{color:#c6b7ec;font-weight:750;background:#211a38;position:sticky;top:0}
+.schedule-table td{color:#f3efff}
+
+/* v14.7 simple page-based desktop workspace */
+html,body{height:100%;min-height:100%;overflow:hidden;background:#171127}
+body{padding:0!important}
+.app{width:100%;max-width:none;height:100dvh;min-height:0;max-height:none;margin:0;border:0!important;border-radius:0!important;box-shadow:none;overflow:hidden;background:#171127;display:flex;flex-direction:column}
+.header{height:68px;min-height:68px;padding:10px 24px;background:#171127;border-bottom:1px solid #33284f;border-radius:0}
+.workspace{display:grid;grid-template-columns:190px minmax(0,1fr);min-height:0;flex:1;overflow:hidden}
+.page-nav{display:flex;flex-direction:column;gap:5px;padding:18px 12px;background:#1c1630;border-right:1px solid #33284f;overflow:auto}
+.page-nav button{display:flex;align-items:center;gap:12px;text-align:left;padding:12px 14px;border-radius:11px;background:transparent;color:#b9addb;font-size:13px;font-weight:650;min-height:43px}
+.page-nav button span{width:20px;text-align:center;font-size:17px;color:#a995e9}
+.page-nav button.active{background:#392d62;color:#fff}
+.page-nav button.active span{color:#c7b5ff}
+.screen{min-width:0;min-height:0;height:100%;overflow:auto;padding:24px clamp(18px,3vw,42px);overscroll-behavior:contain}
+.screen>h1,.screen>.tasks-heading{max-width:1050px}
+.screen>.card,.screen>section,.screen>.tasks-table,.screen>.tasks-search,.screen>.calendar,.screen>.sectionhead,.screen>.historyitem{max-width:1050px}
+.screen .card{border-radius:14px;box-shadow:none}
+.screen h1{font-size:24px}
+.screen h2{font-size:16px}
+.screen .hero{border-radius:15px;box-shadow:none}
+.screen .field{background:#211a38!important}
+#riyaConversation{max-height:260px;overflow:auto;padding-right:4px}
+#riyaQuickNote{resize:none;min-height:74px;max-height:100px}
+.modal{width:min(560px,100%);max-height:84dvh;border-radius:18px 18px 0 0}
+@media(max-width:720px){
+ .workspace{grid-template-columns:1fr;grid-template-rows:auto minmax(0,1fr)}
+ .page-nav{flex-direction:row;overflow-x:auto;overflow-y:hidden;padding:7px 9px;border-right:0;border-bottom:1px solid #33284f;gap:4px}
+ .page-nav button{flex:0 0 auto;min-height:38px;padding:8px 11px;font-size:11px;gap:6px}
+ .page-nav button span{font-size:14px;width:auto}
+ .screen{padding:15px 13px 22px}
+ .header{height:58px;min-height:58px;padding:8px 13px}
+}
+@media(min-width:721px){.screen{scrollbar-width:thin;scrollbar-color:#493b70 transparent}}
+
+
+/* RIYA v15.2 — polished sporty workspace (same midnight-indigo / violet palette) */
+:root{
+ --bg:#151022;--card:#211a36;--ink:#f7f4ff;--mut:#aaa0c8;--p:#9b7cff;--pl:#342753;--ln:#3b3158;
+ --shadow:0 14px 36px rgba(5,3,15,.22);--ease:cubic-bezier(.2,.75,.25,1)
+}
+html,body{background:radial-gradient(ellipse at 75% -15%,rgba(130,99,230,.13),transparent 38%),var(--bg);color:var(--ink)}
+.app{background:transparent}
+.header{height:76px;min-height:76px;padding:0 clamp(18px,3vw,42px);background:rgba(21,16,34,.88);backdrop-filter:blur(18px);border-bottom:1px solid rgba(155,124,255,.16)}
+.brand{font-size:16px;letter-spacing:1.8px}.logo{width:42px;height:42px;border-radius:15px;background:linear-gradient(145deg,#a58cff,#6748d5);color:#fff;font-size:21px;font-weight:900;box-shadow:0 7px 20px rgba(115,83,220,.28)}
+.subbrand{font-size:9px;letter-spacing:1.55px;color:#a79bc7;margin-top:2px}
+.status{letter-spacing:.7px;font-size:9px;padding:7px 11px;background:rgba(115,214,162,.1);border:1px solid rgba(115,214,162,.2);color:#8ee2b7}
+.workspace{grid-template-columns:220px minmax(0,1fr)}
+.page-nav{padding:24px 14px;background:rgba(27,21,44,.78);border-right:1px solid rgba(155,124,255,.14);gap:7px}
+.page-nav:before{content:"WORKSPACE";display:block;padding:0 13px 9px;color:#756b91;font-size:9px;font-weight:850;letter-spacing:1.8px}
+.page-nav button{position:relative;min-height:48px;padding:12px 14px;border:1px solid transparent;border-radius:14px;color:#aaa0c8;font-size:13px;transition:background .2s var(--ease),color .2s var(--ease),transform .2s var(--ease),border-color .2s var(--ease)}
+.page-nav button span{font-size:17px;color:#9484c2;transition:transform .2s var(--ease)}
+.page-nav button:hover{background:rgba(155,124,255,.08);color:#fff;transform:translateX(2px)}
+.page-nav button.active{background:linear-gradient(100deg,rgba(155,124,255,.2),rgba(155,124,255,.07));border-color:rgba(155,124,255,.2);color:#fff;box-shadow:inset 3px 0 #a58cff}
+.page-nav button.active span{color:#c7b5ff;transform:scale(1.08)}
+.screen{padding:clamp(22px,3.2vw,46px) clamp(20px,4vw,58px);scroll-behavior:smooth}
+.screen>*{max-width:1100px}
+.screen h1{font-size:clamp(27px,3vw,36px);font-weight:820;letter-spacing:-1.1px;line-height:1.12;margin:8px 0 9px}
+.screen h2{font-size:17px;font-weight:780;letter-spacing:-.25px;margin:22px 0 12px}
+.sub{font-size:13px;line-height:1.65;color:#aaa0c8}
+.card,.screen .card{padding:19px;border-radius:19px;border:1px solid rgba(155,124,255,.16);background:linear-gradient(145deg,rgba(39,31,62,.96),rgba(31,25,49,.98));box-shadow:0 10px 28px rgba(4,2,12,.13);transition:border-color .2s var(--ease),transform .2s var(--ease),box-shadow .2s var(--ease)}
+.screen .card:hover{border-color:rgba(155,124,255,.3);box-shadow:0 14px 34px rgba(4,2,12,.2)}
+.hero{background:linear-gradient(125deg,#8f70f0 0%,#7252df 58%,#5c42bd 100%);border:1px solid rgba(255,255,255,.14);box-shadow:0 14px 34px rgba(92,66,189,.22)}
+.btn{min-height:42px;padding:10px 16px;border-radius:13px;background:linear-gradient(135deg,#a48aff,#795be5);box-shadow:0 7px 18px rgba(115,83,220,.18);transition:transform .18s var(--ease),filter .18s var(--ease),box-shadow .18s var(--ease)}
+.btn:hover:not(:disabled){filter:brightness(1.08);transform:translateY(-1px);box-shadow:0 10px 22px rgba(115,83,220,.25)}
+.btn:active:not(:disabled){transform:translateY(0) scale(.985)}
+.btn.secondary,.btn.ghost,.iconbtn{background:rgba(66,52,103,.72);border:1px solid rgba(169,145,239,.2);color:#d6caff;box-shadow:none}
+.iconbtn{width:40px;height:40px;border-radius:13px;transition:background .2s,transform .2s}
+.iconbtn:hover{background:#493875;transform:translateY(-1px)}
+.field,input,select,textarea{background:rgba(24,19,39,.86)!important;border:1px solid #493d68!important;border-radius:13px;color:#f7f4ff!important;transition:border-color .18s,box-shadow .18s}
+.field:focus,input:focus,select:focus,textarea:focus{border-color:#a58cff!important;box-shadow:0 0 0 3px rgba(155,124,255,.14)!important;outline:none}
+.field::placeholder,textarea::placeholder{color:#82779f}
+label{color:#c9bce7}
+.pill{padding:5px 10px;border:1px solid rgba(155,124,255,.13);font-size:10px;letter-spacing:.1px}
+.taskrow{padding:14px 2px;border-bottom-color:rgba(155,124,255,.13)}
+.tasktitle{font-size:13px;line-height:1.45}
+.progress{background:#33294d}.progress i{background:linear-gradient(90deg,#c0adff,#8f70f0)}
+.event{background:#29213f;border-color:#443568}
+.calday{border-radius:12px;transition:background .18s,border-color .18s,transform .18s}.calday:hover{border-color:#a58cff;transform:translateY(-1px)}
+.tabs{background:#171127;border-top:1px solid #3a2e59}
+.modal{background:#211a38;border:1px solid rgba(155,124,255,.2);box-shadow:0 -18px 50px rgba(0,0,0,.35)}
+.toast{background:#f5f0ff;color:#211a38;font-weight:700;box-shadow:0 12px 32px rgba(0,0,0,.25)}
+#riyaConversation{gap:12px!important;padding:4px 2px 8px}
+#riyaConversation>div{border-radius:16px!important;box-shadow:0 5px 16px rgba(0,0,0,.12)}
+#riyaQuickNote{min-height:96px;max-height:180px;padding:14px 15px;line-height:1.55}
+.welcome h1{letter-spacing:-1.2px}
+.screen .sectionhead{margin-top:25px}
+.screen table{border-collapse:separate;border-spacing:0;overflow:hidden;border-radius:12px}
+.screen th,.screen td{padding:11px 12px;border-bottom:1px solid rgba(155,124,255,.12)}
+.screen th{background:#2a2143;color:#cbbcff}
+.screen tr:last-child td{border-bottom:0}
+:focus-visible{outline:2px solid #b7a3ff;outline-offset:3px}
+@media(max-width:720px){
+ html,body{overflow:hidden}
+ .header{height:62px;min-height:62px;padding:0 15px}
+ .logo{width:36px;height:36px;border-radius:12px}
+ .workspace{grid-template-columns:1fr;grid-template-rows:minmax(0,1fr) auto}
+ .screen{grid-row:1;padding:19px 15px 24px}
+ .page-nav{grid-row:2;position:relative;z-index:5;display:flex;flex-direction:row;justify-content:space-around;overflow-x:auto;overflow-y:hidden;padding:8px 6px calc(8px + env(safe-area-inset-bottom));background:rgba(24,18,39,.96);backdrop-filter:blur(18px);border-right:0;border-top:1px solid rgba(155,124,255,.18);border-bottom:0;gap:3px}
+ .page-nav:before{display:none}
+ .page-nav button{flex:1 0 0;min-width:0;min-height:52px;display:flex;flex-direction:column;justify-content:center;gap:3px;padding:5px 2px;border-radius:12px;font-size:10px;text-align:center}
+ .page-nav button span{font-size:17px;width:auto}
+ .page-nav button.active{box-shadow:inset 0 2px #a58cff;background:rgba(155,124,255,.13)}
+ .page-nav button:hover{transform:none}
+ .screen .card{padding:16px;border-radius:17px}
+ .welcome h1{font-size:29px!important}
+ .modal{border-radius:20px 20px 0 0}
+}
+@media(min-width:721px){
+ .header{padding-left:30px;padding-right:30px}
+ .screen{padding-top:34px}
+ .screen .welcome{margin-bottom:18px}
+}
+@media(prefers-reduced-motion:reduce){*,*::before,*::after{scroll-behavior:auto!important;transition:none!important;animation:none!important}}
+
+</style>
+</head>
+<body><div class="app">
+<header class="header"><div class="brand"><div class="logo">R</div><div>RIYA<div class="subbrand">TASKS & PRIORITIES</div></div></div><div class="row" style="gap:8px"><span class="status" id="appStatus">READY</span><button class="iconbtn" type="button" onclick="refreshRiyaApp()" title="Clear all and start fresh" aria-label="Clear all and start fresh">⌫</button></div></header>
+<div class="workspace">
+<nav class="page-nav" aria-label="RIYA pages">
+<button data-page="home" onclick="navigate('home')"><span>✦</span>Chat</button>
+<button data-page="tasks" onclick="navigate('tasks')"><span>☷</span>Tasks</button>
+<button data-page="schedule" onclick="navigate('schedule')"><span>◷</span>Schedule</button>
+<button data-page="calendar" onclick="navigate('calendar')"><span>▦</span>Calendar</button>
+<button data-page="history" onclick="navigate('history')"><span>↺</span>History</button>
+<button data-page="settings" onclick="navigate('settings')"><span>⚙</span>Settings</button>
+</nav>
+<main id="screen" class="screen" aria-live="polite"></main>
+</div>
+<!-- Focused workspace: task capture, conversation and priority selection only. --></div><div id="modalRoot"></div><div id="toast" class="toast" role="status"></div>
+<script>
+'use strict';
+const STORE='riya_scheduler_v1';
+const $=id=>document.getElementById(id);
+const pad=n=>String(n).padStart(2,'0');
+const localISO=(d=new Date())=>`${d.getFullYear()}-${pad(d.getMonth()+1)}-${pad(d.getDate())}`;
+const plusDays=(iso,n)=>{const d=new Date(iso+'T12:00:00');d.setDate(d.getDate()+n);return localISO(d)};
+const parseTime=t=>{if(!/^([01]\d|2[0-3]):[0-5]\d$/.test(t||''))return null;const [h,m]=t.split(':').map(Number);return h*60+m};
+const validISODate=s=>{if(typeof s!=='string'||!/^\d{4}-\d{2}-\d{2}$/.test(s))return false;const d=new Date(s+'T00:00:00Z');return Number.isFinite(+d)&&d.toISOString().slice(0,10)===s};
+const normTaskTitle=s=>String(s||'').trim().toLocaleLowerCase().replace(/[^\p{L}\p{N}]+/gu,' ').trim();
+const timeText=m=>`${pad(Math.floor(m/60))}:${pad(m%60)}`;
+const prettyDate=(iso,opts={weekday:'short',day:'numeric',month:'short'})=>{if(!iso)return 'No date';const d=new Date(iso+'T12:00:00');return Number.isNaN(+d)?iso:d.toLocaleDateString('en-IN',opts)};
+const esc=s=>String(s??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+const uid=()=>crypto.randomUUID?crypto.randomUUID():'t'+Date.now().toString(36)+Math.random().toString(36).slice(2,8);
+const defaults={workStart:'07:00',workEnd:'22:00',buffer:10,notifications:false,reminderMinutes:10,weekStartsMonday:true};
+const defaultRiyaCategories=[{id:'high_priority',label:'High-priority',description:'Things I enjoy doing and that contribute meaningfully to my growth across career, health, relationships, family, or other important areas.'},{id:'delegatable',label:'Delegatable',description:'Important tasks I dislike doing and could hand to another person, employee, friend, or suitable AI assistant.'},{id:'enjoyable_low_growth',label:'Enjoyable, low-growth',description:'Activities I enjoy, but that do not contribute much to my longer-term growth.'},{id:'detrimental',label:'Detrimental',description:'Activities I dislike that negatively affect my growth, focus, wellbeing, or progress.'}];
+let state={conversationId:null,workingMemory:{},memoryVersion:0,conversationList:[],tab:'home',selectedDate:localISO(),calendarMonth:localISO().slice(0,7),tasks:[],history:[],settings:{...defaults},proposal:null,filter:'all',query:'',aiMessages:[],lastAiTasks:[],riyaPriorityPending:false,riyaScheduleReview:null};
+function load(){try{const raw=localStorage.getItem(STORE);if(raw){const x=JSON.parse(raw);state={...state,...x,settings:{...defaults,...x.settings},proposal:null};}}catch(e){console.warn('RIYA storage could not be read',e);toast('Saved data could not be read. Your current session is still available.')}}
+let dbReady=false,dbSyncTimer=null,dbSyncInFlight=false,dbSyncDirty=false,dbSyncFailed=false,dbRevision=null;
+async function syncStateToDatabase(){
+ if(!dbReady)return false;
+ if(dbSyncInFlight){dbSyncDirty=true;return false;}
+ dbSyncInFlight=true;dbSyncDirty=false;
+ const makePayload=()=>({app:'RIYA',version:1,exportedAt:new Date().toISOString(),tasks:state.tasks,history:state.history,settings:state.settings});
+ const mergeById=(remoteItems,localItems)=>{
+  const merged=new Map();
+  for(const item of (Array.isArray(remoteItems)?remoteItems:[]))if(item&&item.id)merged.set(String(item.id),item);
+  for(const item of (Array.isArray(localItems)?localItems:[]))if(item&&item.id){
+   const id=String(item.id),remote=merged.get(id);
+   if(remote&&Array.isArray(remote.sessions)&&Array.isArray(item.sessions)){
+    const sessions=new Map(remote.sessions.filter(x=>x&&x.id).map(x=>[String(x.id),x]));
+    for(const session of item.sessions)if(session&&session.id)sessions.set(String(session.id),session);
+    merged.set(id,{...remote,...item,sessions:[...sessions.values()]});
+   }else merged.set(id,{...(remote||{}),...item});
+  }
+  return [...merged.values()];
+ };
+ try{
+  for(let attempt=0;attempt<3;attempt++){
+   const payload=makePayload();
+   const response=await fetch('/api/db/state',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({state:payload,expected_revision:dbRevision})});
+   const result=await response.json();
+   if(response.status===409||result.conflict){
+    if(attempt===2)throw new Error('RIYA database changed repeatedly while saving. Your browser backup is retained; retry after a moment.');
+    const latestResponse=await fetch('/api/db/data',{cache:'no-store'});
+    if(!latestResponse.ok)throw new Error('RIYA detected a database conflict but could not reload the latest database state.');
+    const latest=await latestResponse.json();
+    if(!Number.isInteger(latest.revision))throw new Error('RIYA could not read the latest database revision.');
+    // Preserve both sides: keep browser edits, add database-only records, and merge sessions by ID.
+    state.tasks=mergeById(latest.tasks,state.tasks);
+    state.history=mergeById(latest.history,state.history).sort((a,b)=>String(b.at||'').localeCompare(String(a.at||''))).slice(0,500);
+    state.settings={...defaults,...(latest.settings||{}),...(state.settings||{})};
+    dbRevision=latest.revision;
+    try{localStorage.setItem(STORE,JSON.stringify({...state,proposal:null}));}catch(_){}
+    continue;
+   }
+   if(!response.ok||!result.ok||!result.verified)throw new Error(result.error||'SQLite did not verify the save.');
+   const verified=result.database;
+   if(!Number.isInteger(result.revision))throw new Error('SQLite did not return a valid database revision.');
+   dbRevision=result.revision;
+   if(!Array.isArray(verified.tasks)||verified.tasks.length!==payload.tasks.length)throw new Error('SQLite task read-back count did not match.');
+   dbSyncFailed=false;
+   return true;
+  }
+  throw new Error('RIYA could not complete database sync.');
+ }catch(error){
+  dbSyncFailed=true;console.error('RIYA SQLite sync failed:',error);
+  toast('Database sync failed. Your browser backup remains available; check the RIYA server.');
+  return false;
+ }finally{
+  dbSyncInFlight=false;
+  if(dbSyncDirty){dbSyncDirty=false;syncStateToDatabase();}
+ }
+}
+function persist(){
+ try{
+  localStorage.setItem(STORE,JSON.stringify({...state,proposal:null}));
+  if(dbReady){clearTimeout(dbSyncTimer);dbSyncTimer=setTimeout(syncStateToDatabase,180);}
+  return true;
+ }catch(e){toast('Could not save. Browser storage may be full or disabled.');return false}
+}
+// Critical mutations call this before reporting success. It drains queued snapshot writes
+// and requires SQLite read-back verification; localStorage alone is not treated as a commit.
+async function persistAndVerify(){
+ clearTimeout(dbSyncTimer);
+ if(!dbReady){
+  const deadline=Date.now()+10000;
+  while(!dbReady&&Date.now()<deadline)await new Promise(resolve=>setTimeout(resolve,100));
+ }
+ if(!dbReady)throw new Error('RIYA database is not ready. Your browser backup is retained; retry after the database reconnects.');
+ for(let attempt=0;attempt<4;attempt++){
+  while(dbSyncInFlight)await new Promise(resolve=>setTimeout(resolve,25));
+  dbSyncDirty=false;
+  const ok=await syncStateToDatabase();
+  if(!ok)throw new Error('SQLite could not confirm this save. Your browser backup is retained.');
+  while(dbSyncInFlight)await new Promise(resolve=>setTimeout(resolve,25));
+  if(!dbSyncDirty)return true;
+ }
+ throw new Error('RIYA is still syncing another change. Please retry once syncing finishes.');
+}
+async function bootstrapDatabase(){
+ try{
+  const response=await fetch('/api/db/data',{cache:'no-store'});
+  if(!response.ok)throw new Error('Could not read the RIYA database.');
+  const remote=await response.json();
+  const localRaw=localStorage.getItem(STORE);
+  const local=localRaw?JSON.parse(localRaw):null;
+  const remoteTasks=Array.isArray(remote.tasks)?remote.tasks:[];
+  if(remoteTasks.length===0&&local&&Array.isArray(local.tasks)&&local.tasks.length){
+   const backup={app:'RIYA',version:1,exportedAt:new Date().toISOString(),tasks:local.tasks,history:local.history||[],settings:local.settings||defaults};
+   const imported=await fetch('/api/db/state',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({state:backup,expected_revision:Number.isInteger(remote.revision)?remote.revision:0})});
+   const result=await imported.json();
+   if(!imported.ok||!result.ok||!result.verified)throw new Error(result.error||'Legacy browser data migration failed.');
+   state={...state,...local,settings:{...defaults,...(result.database.settings||local.settings||{})},tasks:result.database.tasks||local.tasks,history:result.database.history||local.history||[],proposal:null};
+   dbRevision=result.revision;
+  }else{
+   state={...state,tasks:remoteTasks,history:remote.history||[],settings:{...defaults,...(remote.settings||{})},proposal:null};
+   try{localStorage.setItem(STORE,JSON.stringify({...state,proposal:null}));}catch(_){}
+  }
+  dbRevision=Number.isInteger(dbRevision)?dbRevision:(Number.isInteger(remote.revision)?remote.revision:0);
+  dbReady=true;try{const categoryResponse=await fetch('/api/riya/categories',{cache:'no-store'});if(categoryResponse.ok){const categoryData=await categoryResponse.json();state.settings.riya_categories=Array.isArray(state.settings.riya_categories)?state.settings.riya_categories:categoryData.categories;}}catch(categoryError){console.warn('Could not load RIYA category settings:',categoryError)}await bootstrapConversation();render();
+ }catch(error){
+  console.error('RIYA database bootstrap failed:',error);
+  toast('SQLite is unavailable. RIYA is using the existing browser data for this session.');
+ }
+}
+async function bootstrapConversation(){
+ const listRes=await fetch('/api/conversations',{cache:'no-store'});if(!listRes.ok)throw new Error('Could not load saved conversations.');
+ const listData=await listRes.json(),items=Array.isArray(listData.conversations)?listData.conversations:[];state.conversationList=items;
+ if(items.length){
+  const latest=items[0],res=await fetch('/api/conversations/'+encodeURIComponent(latest.id),{cache:'no-store'});if(!res.ok)throw new Error('Could not restore conversation.');
+  const bundle=await res.json();state.conversationId=latest.id;
+  state.aiMessages=(bundle.messages||[]).filter(m=>['user','assistant'].includes(m.role)).map(m=>({id:m.id,turn_id:m.turn_id||null,role:m.role,content:m.content}));
+  state.workingMemory=bundle.working_memory||{};state.memoryVersion=Number(bundle.memory_version)||0;
+  if(Array.isArray(state.workingMemory.draft_tasks))state.lastAiTasks=state.workingMemory.draft_tasks;
+  state.riyaPriorityPending=!!state.workingMemory.priority_pending;state.riyaScheduleReview=state.workingMemory.schedule_preview||null;
+ }else{
+  const memory={draft_tasks:Array.isArray(state.lastAiTasks)?state.lastAiTasks:[],priority_pending:!!state.riyaPriorityPending,schedule_preview:state.riyaScheduleReview||null};
+  const res=await fetch('/api/conversations',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({title:'RIYA conversation',messages:Array.isArray(state.aiMessages)?state.aiMessages:[],working_memory:memory})});
+  const created=await res.json();if(!res.ok||!created.ok)throw new Error(created.error||'Could not create conversation.');
+  state.conversationId=created.conversation_id;state.workingMemory=memory;state.memoryVersion=1;state.conversationList=[{id:created.conversation_id,title:'RIYA conversation',updated_at:new Date().toISOString(),message_count:legacyMessages.length}];
+ }
+ // Repair planner records from previously saved conversation working memory.
+ // This makes tasks captured before the planner sync fix visible after an upgrade.
+ if(Array.isArray(state.lastAiTasks)&&state.lastAiTasks.length){
+  await syncRiyaTasksToPlanner(state.lastAiTasks);
+  persist();
+  try{await persistAndVerify();}catch(error){console.warn('Conversation task recovery could not be verified in SQLite:',error);}
+ }
+ try{localStorage.setItem(STORE,JSON.stringify({...state,proposal:null}));}catch(_){}
+}
+async function startNewConversation(){
+ const res=await fetch('/api/conversations',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({title:'New conversation',working_memory:{draft_tasks:[],priority_pending:false,schedule_preview:null}})});
+ const data=await res.json();if(!res.ok||!data.ok){toast(data.error||'Could not start a new conversation.');return;}
+ state.conversationId=data.conversation_id;state.aiMessages=[];state.lastAiTasks=[];state.lastAiQuestions=[];state.riyaPriorityPending=false;state.riyaScheduleReview=null;state.workingMemory={draft_tasks:[],priority_pending:false,schedule_preview:null};
+ const list=await fetch('/api/conversations',{cache:'no-store'});if(list.ok)state.conversationList=(await list.json()).conversations||[];
+ state.tab='home';persist();render();toast('Started a new conversation. Your previous chat is saved.');
+}
+async function openSavedConversation(id){
+ const res=await fetch('/api/conversations/'+encodeURIComponent(id),{cache:'no-store'});const data=await res.json();if(!res.ok){toast(data.error||'Could not open conversation.');return;}
+ state.conversationId=id;state.aiMessages=(data.messages||[]).filter(m=>['user','assistant'].includes(m.role)).map(m=>({id:m.id,turn_id:m.turn_id||null,role:m.role,content:m.content}));state.workingMemory=data.working_memory||{};state.memoryVersion=Number(data.memory_version)||0;
+ state.lastAiTasks=Array.isArray(state.workingMemory.draft_tasks)?state.workingMemory.draft_tasks:[];state.riyaPriorityPending=!!state.workingMemory.priority_pending;state.riyaScheduleReview=state.workingMemory.schedule_preview||null;
+ state.tab='home';persist();render();toast('Conversation restored.');
+}
+async function saveConversationMessage(role,content,turnId=null){
+ if(!state.conversationId)return false;const id=uid();const res=await fetch('/api/conversations/'+encodeURIComponent(state.conversationId)+'/messages',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({id,turn_id:turnId,role,content})});if(!res.ok)throw new Error('Could not save conversation message.');return true;
+}
+function log(action,detail){state.history.unshift({id:uid(),at:new Date().toISOString(),action,detail});state.history=state.history.slice(0,500);persist()}
+function toast(msg){const el=$('toast');el.textContent=msg;el.classList.add('show');clearTimeout(toast.timer);toast.timer=setTimeout(()=>el.classList.remove('show'),2600)}
+async function navigate(tab){state.tab=tab;if(tab==='history'){try{const r=await fetch('/api/conversations',{cache:'no-store'});if(r.ok)state.conversationList=(await r.json()).conversations||[]}catch(e){console.warn('Conversation list refresh failed',e)}}persist();render()}
+function refreshRiyaApp(){
+ if(!window.confirm('Clear RIYA and start fresh? This removes all tasks, priorities and conversation saved in this browser.'))return;
+ if(window.speechSynthesis)window.speechSynthesis.cancel();
+ if(riyaRecognition){try{riyaRecognition.stop()}catch(e){}riyaRecognition=null;}
+ localStorage.removeItem(STORE);
+ state={tab:'home',selectedDate:localISO(),calendarMonth:localISO().slice(0,7),tasks:[],history:[],settings:{...defaults},proposal:null,filter:'all',query:'',aiMessages:[],lastAiTasks:[],lastAiQuestions:[],riyaPriorityPending:false,riyaScheduleReview:null};
+ riyaLastReply='';riyaSpeaking=false;render();updateSpeakButton();toast('All RIYA data cleared. Fresh start!');
+}
+function activeTasks(){return state.tasks.filter(t=>t.status!=='cancelled')}
+function taskSessions(t){if(Array.isArray(t.sessions)&&t.sessions.length)return t.sessions;return t.status==='scheduled'&&t.date&&t.start&&t.end?[{id:t.id+'-legacy',date:t.date,start:t.start,end:t.end,duration:Number(t.duration)||parseTime(t.end)-parseTime(t.start),status:'scheduled'}]:[]}
+function allScheduledSessions(){return activeTasks().flatMap(t=>taskSessions(t).filter(x=>!['cancelled','rescheduled'].includes(x.status)).map(x=>({...x,taskId:t.id,title:t.title,status:t.status==='completed'&&x.status==='scheduled'?'completed':(x.status||t.status||'scheduled')})))}
+function scheduledOn(date){return allScheduledSessions().filter(x=>x.date===date).sort((a,b)=>a.start.localeCompare(b.start))}
+function overlaps(a,b){return a.start<b.end&&b.start<a.end}
+function taskLabel(t){return `${t.title} · ${t.start||'Unscheduled'}${t.end?'–'+t.end:''}`}
+function priorityClass(p){return p==='High'?'high':p==='Medium'?'medium':'low'}
+function formatDuration(n){const h=Math.floor(n/60),m=n%60;return h?`${h}h${m?` ${m}m`:''}`:`${m}m`}
+function render(){
+ const pages={home:homeView,tasks:tasksView,schedule:scheduleView,calendar:calendarView,history:historyView,settings:settingsView};
+ $('screen').innerHTML=(pages[state.tab]||homeView)();
+ document.querySelectorAll('.page-nav button').forEach(button=>button.classList.toggle('active',button.dataset.page===state.tab));
+ if(state.tab==='home'){
+  renderRiyaConversation();
+  renderRiyaTaskSuggestions();
+ }
+ updateSpeakButton();
+}
+function scheduleView(){
+ const plan=state.riyaScheduleReview;
+ const saved=allScheduledSessions().sort((a,b)=>(a.date+(a.start||'')).localeCompare(b.date+(b.start||'')));
+ const draft=activeTasks().filter(t=>t.status==='pending'&&!taskSessions(t).some(x=>x.status==='scheduled')).map(t=>({title:t.title,date:t.date||'',start_time:t.start||'',duration_minutes:t.duration||0,priority:t.priority,task_id:t.ai_task_id||t.id}));
+ let proposal='';
+ if(plan&&plan.entries?.length){
+  proposal=`<section class="card" style="margin-top:12px;border-color:#8065c8">
+   <div class="row between"><b>Proposed schedule</b><span class="pill">Awaiting your review</span></div>
+   <p class="small">Check the dates and time slots. Nothing here has been saved yet.</p>
+   <div style="overflow-x:auto"><table class="schedule-table"><thead><tr><th>Date</th><th>Task</th><th>Start</th><th>End</th><th>Duration</th></tr></thead><tbody>
+   ${plan.entries.map(x=>`<tr><td>${esc(prettyDate(x.date))}</td><td>${esc(x.title)}</td><td>${esc(formatTime(x.start_time))}</td><td>${esc(formatTime(x.end_time))}</td><td>${esc(formatDuration(Number(x.duration_minutes)))}</td></tr>`).join('')}
+   </tbody></table></div>
+   ${plan.conflicts?.length?`<div class="notice dangertext">${plan.conflicts.map(esc).join('<br>')}</div>`:''}
+   <div class="actions"><button class="btn ghost" onclick="discardRiyaBatchSchedule()">Discard proposal</button><button class="btn" ${plan.conflicts?.length?'disabled':''} onclick="approveRiyaBatchSchedule()">Approve & save</button></div>
+  </section>`;
+ }else if(plan?.needs_clarification){proposal=`<section class="card" style="margin-top:12px"><b>Schedule needs clarification</b><p class="small">${esc(plan.clarification||'Please clarify which tasks to include.')}</p></section>`;}
+ else proposal=`<section class="card" style="margin-top:12px"><b>No schedule proposal yet</b><p class="small">Tell RIYA in the conversation which task to place, when it should happen, and how much time to reserve. The proposal will appear here for review.</p></section>`;
+ const savedHtml=saved.length?`<section class="card" style="margin-top:12px"><div class="row between"><b>Saved schedule</b><span class="pill">${saved.length} session${saved.length===1?'':'s'}</span></div><div style="overflow-x:auto"><table class="schedule-table"><thead><tr><th>Date</th><th>Task</th><th>Start</th><th>End</th><th>Duration</th><th>Status</th></tr></thead><tbody>${saved.map(t=>`<tr><td>${esc(prettyDate(t.date))}</td><td>${esc(t.title)}</td><td>${esc(formatTime(t.start))}</td><td>${esc(formatTime(t.end))}</td><td>${esc(formatDuration(Number(t.duration)||0))}</td><td><span class="pill" style="color:${t.status==='completed'?'#83dfb5':t.status==='cancelled'?'#ff9a9a':'#b49aff'}">${esc(t.status||'scheduled')}</span></td></tr>`).join('')}</tbody></table></div></section>`:`<section class="card" style="margin-top:12px"><b>Saved schedule</b><p class="small">Approved sessions will appear here in a date-and-time table.</p></section>`;
+ const draftsHtml=draft.length?`<section class="card" style="margin-top:12px"><b>Tasks not scheduled yet</b>${draft.map(t=>`<div class="small" style="padding:7px 0;border-top:1px solid #493b70">${esc(t.title)} · ${t.date?esc(prettyDate(t.date)):'Date not set'} · ${t.start_time?esc(formatTime(t.start_time)):'Time not set'}</div>`).join('')}</section>`:'';
+ return `<div style="margin:0 0 14px"><button class="btn secondary full" style="display:block;width:100%;text-align:left;padding:13px 16px;font-size:14px" onclick="navigate('home')" aria-label="Back to RIYA conversation">←&nbsp; Back to conversation</button></div><div style="margin:4px 0 14px"><div class="small" style="color:#b49aff;font-weight:800;letter-spacing:1px">RIYA PLANNER</div><h1 style="font-size:26px;margin:5px 0">Schedule &amp; review</h1><p class="small">Review proposed slots and see everything you've saved.</p></div>${proposal}${savedHtml}${draftsHtml}<p class="footnote" style="text-align:center;margin-top:12px">RIYA understands first. You decide what happens next.</p>`;
+}
+function homeView(){return `
+<div class="row" style="justify-content:flex-end;margin-bottom:10px"><button class="btn secondary" onclick="startNewConversation()">＋ New chat</button><button class="btn secondary" onclick="navigate('schedule')">📅 Schedule & review</button></div>
+<div class="welcome" style="padding:4px 0 12px"><div class="small" style="letter-spacing:1.5px;color:#b49aff;font-weight:800">YOUR TASK SIDEKICK</div><h1 style="font-size:30px;margin-top:9px">Hey! 👋</h1><p class="sub" style="font-size:14px">Tell me what's on your plate. We'll sort it out together.</p></div>
+<section class="card" style="padding:16px;border-radius:22px;border-color:#594786;background:linear-gradient(145deg,#292044,#211a38)">
+<div style="font-weight:750;margin-bottom:7px">Let's get everything out of your head.</div><p class="small" style="margin:0 0 12px">Tell RIYA what is happening — tasks, meetings, routines or plans. She'll understand the context, ask one question at a time and help shape a realistic plan with you.</p>
+<div id="riyaConversation" style="display:flex;flex-direction:column;gap:9px;margin:10px 0"></div>
+<textarea id="riyaQuickNote" class="field" rows="3" style="width:100%;resize:vertical" placeholder="Tell RIYA everything on your mind… Enter to send · Shift+Enter for a new line."></textarea>
+<div class="row between" style="margin-top:8px;align-items:center;flex-wrap:wrap"><div class="row" style="gap:7px"><button class="iconbtn" type="button" id="riyaMicBtn" onclick="toggleRiyaVoice()" title="Voice input">🎙</button><select id="riyaVoiceLang" class="field" style="width:auto;min-width:112px;margin:0;padding:8px"><option value="en-IN">English</option><option value="ta-IN">தமிழ்</option></select><button class="iconbtn" type="button" id="riyaSpeakBtn" onclick="speakLastRiyaReply()" title="Speak last reply">▶ Speak</button></div><button class="btn" id="riyaSendBtn" onclick="riyaCapture()">Send&nbsp; ➤</button></div>
+<div class="small" style="margin-top:7px">Enter to send · Shift+Enter for a new line. RIYA keeps your plan organised while we figure things out together.</div></section>
+<section class="card" style="margin-top:14px"><div class="row between"><b>Captured tasks</b><span class="pill" id="riyaTaskCount">${(state.lastAiTasks||[]).length} tasks</span></div><div id="riyaTaskList"></div></section>
+<p class="footnote" style="text-align:center;margin-top:12px">We’ll add each task to your plan as we work through it. Nothing is placed until the details are clear.</p>`}
+function formatRiyaMessage(value){const raw=String(value??'').replace(/&amp;#39;|&#39;|&#x27;|&apos;/gi,"'").replace(/&amp;quot;|&quot;/gi,'\"').replace(/\r\n?/g,'\n');return esc(raw).replace(/\*\*(.+?)\*\*/gs,'<strong>$1</strong>').replace(/\*\*/g,'').replace(/(^|\n)[-•]\s+/g,'$1• ').replace(/\n/g,'<br>');}
+function renderRiyaConversation(){const host=$('riyaConversation');if(!host)return;host.innerHTML=(state.aiMessages||[]).slice(-10).map(m=>{const isUser=m.role==='user';return `<div style="align-self:${isUser?'flex-end':'stretch'};max-width:${isUser?'88%':'100%'};background:${isUser?'#514078':'#211a38'};border:1px solid #493b70;border-radius:15px;padding:10px 12px"><div class="small" style="color:#c6b7ec;font-weight:750;margin-bottom:3px">${isUser?'YOU':'RIYA'}</div><div style="white-space:normal;overflow-wrap:anywhere;line-height:1.55">${formatRiyaMessage(m.content)}</div></div>`}).join('');renderRiyaCompanionCards();host.scrollTop=host.scrollHeight;}
+
+function renderRiyaCompanionCards(){
+ const host=$('riyaConversation'); if(!host)return;
+ const drafts=Array.isArray(state.lastAiTasks)?state.lastAiTasks:[];
+ if(!drafts.length)return;
+ const esc=v=>String(v??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+ const latest=host.querySelector('[data-riya-companion-cards="1"]');
+ if(latest)latest.remove();
+ const wrap=document.createElement('section'); wrap.dataset.riyaCompanionCards='1';
+ wrap.style.cssText='margin:2px 0 10px 0;padding:12px;border:1px solid #493b70;border-radius:16px;background:#211a38;color:#f4efff;max-width:100%';
+ const title=document.createElement('div'); title.textContent='What I understood'; title.style.cssText='font-weight:800;margin-bottom:9px;color:#e8ddff';
+ wrap.appendChild(title);
+ const grid=document.createElement('div'); grid.style.cssText='display:grid;grid-template-columns:repeat(auto-fit,minmax(190px,1fr));gap:8px';
+ drafts.slice(0,12).forEach((t,i)=>{
+   const card=document.createElement('div'); card.style.cssText='padding:10px;border:1px solid #493b70;border-radius:12px;background:#2a2144;min-width:0';
+   const name=document.createElement('div'); name.textContent=(i+1)+'. '+(t.title||'Untitled task'); name.style.cssText='font-weight:750;overflow-wrap:anywhere';
+   const meta=document.createElement('div'); meta.style.cssText='font-size:12px;color:#c6b7ec;margin-top:5px;line-height:1.5';
+   const bits=[];
+   if(t.date)bits.push('Date: '+t.date);
+   if(t.deadline)bits.push('Due: '+t.deadline);
+   if(t.duration_minutes)bits.push((t.duration_minutes)+' min');
+   if(t.start_time)bits.push('At '+t.start_time);
+   if(t.preferred_time)bits.push(t.preferred_time);
+   if(t.category_label)bits.push(t.category_label);
+   if(t.needs_review)bits.push('Category needs review');
+   meta.textContent=bits.length?bits.join(' · '):'Details to confirm';
+   card.append(name,meta); grid.appendChild(card);
+ });
+ wrap.appendChild(grid);
+ const note=document.createElement('div'); note.textContent='I’ll keep these details together as we continue. You can correct anything in the chat.'; note.style.cssText='font-size:12px;color:#c6b7ec;margin-top:9px';
+ wrap.appendChild(note);
+ host.appendChild(wrap);
+}
+let riyaLastReply='';
+let riyaLastInputWasVoice=false;
+async function syncRiyaTasksToPlanner(drafts){
+ const items=Array.isArray(drafts)?drafts:[];
+ for(const d of items){
+  if(!d||!d.title)continue;
+  const title=String(d.title).trim();
+  let saved=d.task_id?state.tasks.find(t=>t.ai_task_id===d.task_id||t.id===d.task_id):null;
+  if(!saved){
+   const matches=state.tasks.filter(t=>normTaskTitle(t.title)===normTaskTitle(title)&&t.status!=='cancelled');
+   if(matches.length===1)saved=matches[0];
+  }
+  if(saved&&['completed','cancelled'].includes(saved.status)){d.task_id=saved.ai_task_id||saved.id;continue;}
+  const date=d.date||'';
+  const duration=Number(d.duration_minutes||d.duration||0)||0;
+  if(!saved){
+   const id=uid(); saved={id,title,date,duration,priority:d.priority||'Medium',kind:d.kind||'flexible',start:d.start_time||'',end:d.end_time||'',deadline:d.deadline||'',preferred:d.preferred_time||'Anytime',notes:d.notes||'',status:'pending',createdAt:new Date().toISOString(),completedAt:null,sessions:[],ai_task_id:d.task_id||uid()};
+   state.tasks.push(saved); d.task_id=saved.ai_task_id;
+  }else{
+   saved.ai_task_id=saved.ai_task_id||d.task_id||uid(); d.task_id=saved.ai_task_id;
+   saved.title=title;
+   if(date)saved.date=date;
+   if(duration)saved.duration=duration;
+   if(d.priority)saved.priority=d.priority;
+   if(d.kind)saved.kind=d.kind;
+   if(d.start_time)saved.start=d.start_time;
+   if(d.end_time)saved.end=d.end_time;
+   if(d.deadline)saved.deadline=d.deadline;
+   if(d.preferred_time)saved.preferred=d.preferred_time;
+   if(d.notes)saved.notes=d.notes;
+  }
+ }
+}
+function commitRiyaSchedule(plan,drafts){
+ if(!plan||!Array.isArray(plan.entries)||!plan.entries.length||plan.needs_clarification||plan.conflicts?.length)return {ok:false,reason:'The proposal needs clarification or has conflicts.'};
+ const entries=plan.entries.map(x=>{const start=parseTime(x.start_time),end=parseTime(x.end_time),duration=Number(x.duration_minutes);return {...x,start,end,duration,title:String(x.title||'').trim()};});
+ if(entries.some(x=>!x.title||!validISODate(x.date)||x.date<localISO()||x.start===null||x.end===null||x.end<=x.start||!Number.isFinite(x.duration)||x.duration<=0||x.end-x.start!==x.duration))return {ok:false,reason:'One or more proposed sessions have an invalid calendar date, time or duration.'};
+ for(let i=0;i<entries.length;i++)for(let j=i+1;j<entries.length;j++)if(entries[i].date===entries[j].date&&entries[i].start<entries[j].end&&entries[j].start<entries[i].end)return {ok:false,reason:'The proposed sessions overlap each other.'};
+ const snapshot=JSON.parse(JSON.stringify(state));
+ const expected=[];
+ try{
+  for(const x of entries){
+   let task=x.task_id?state.tasks.find(t=>t.ai_task_id===x.task_id||t.id===x.task_id):null;
+   if(!task){const matches=state.tasks.filter(t=>normTaskTitle(t.title)===normTaskTitle(x.title)&&t.status!=='cancelled');if(matches.length>1)throw new Error(`More than one task is named “${x.title}”. Please select the exact task before scheduling.`);task=matches[0]||null;}
+   if(task&&['completed','cancelled'].includes(task.status))throw new Error(`“${task.title}” is ${task.status} and cannot be scheduled.`);
+   if(!task){task={id:uid(),ai_task_id:x.task_id||uid(),title:x.title,date:'',duration:x.duration,priority:'Medium',kind:'fixed',start:'',end:'',deadline:'',preferred:'Anytime',notes:'',status:'pending',createdAt:new Date().toISOString(),completedAt:null,sessions:[]};state.tasks.push(task);}
+   task.sessions=Array.isArray(task.sessions)?task.sessions:[];
+   if(task.status==='scheduled'&&task.date&&task.start&&task.end&&!task.sessions.length)task.sessions.push({id:task.id+'-legacy',date:task.date,start:task.start,end:task.end,duration:Number(task.duration)||parseTime(task.end)-parseTime(task.start),status:'scheduled'});
+   const duplicate=task.sessions.find(z=>z.date===x.date&&z.start===x.start_time&&z.end===x.end_time&&z.status!=='cancelled');
+   if(!duplicate){
+    const clash=allScheduledSessions().find(z=>z.status==='scheduled'&&z.date===x.date&&parseTime(z.start)!==null&&parseTime(z.end)!==null&&x.start<parseTime(z.end)&&x.end>parseTime(z.start));
+    if(clash)throw new Error(`${x.date} ${x.start_time}–${x.end_time} overlaps with ${clash.title}.`);
+    task.sessions.push({id:uid(),date:x.date,start:x.start_time,end:x.end_time,duration:x.duration,status:'scheduled'});
+   }
+   task.status='scheduled';task.kind='fixed';task.duration=task.duration||x.duration;
+   if(!task.date||x.date<task.date){task.date=x.date;task.start=x.start_time;task.end=x.end_time;}
+   expected.push({taskId:task.id,date:x.date,start:x.start_time,end:x.end_time});
+  }
+  for(const d of drafts||[]){const matches=entries.filter(x=>(x.task_id&&x.task_id===d.task_id)||normTaskTitle(x.title)===normTaskTitle(d.title));if(matches.length){d.scheduled=true;d.schedule_status='scheduled';d.scheduled_instances=matches.map(x=>({title:x.title,date:x.date,start_time:x.start_time,end_time:x.end_time,duration_minutes:x.duration}));}}
+  state.riyaScheduleReview=null;state.proposal=null;
+  state.history.unshift({id:uid(),at:new Date().toISOString(),action:'Schedule approved',detail:`${expected.length} session(s) saved`});state.history=state.history.slice(0,500);
+  if(!persist())throw new Error('Storage save failed');
+  const stored=JSON.parse(localStorage.getItem(STORE)||'{}');
+  const verified=expected.every(e=>(stored.tasks||[]).some(t=>t.id===e.taskId&&Array.isArray(t.sessions)&&t.sessions.some(z=>z.date===e.date&&z.start===e.start&&z.end===e.end&&z.status==='scheduled')));
+  if(!verified)throw new Error('Saved data verification failed');
+  return {ok:true,count:expected.length};
+ }catch(err){
+  state=snapshot;
+  try{localStorage.setItem(STORE,JSON.stringify({...state,proposal:null}));}catch(e){}
+  return {ok:false,reason:err.message||'Save verification failed; all changes were rolled back.'};
+ }
+}
+function commitRiyaPreviewAutomatically(plan,drafts){const result=commitRiyaSchedule(plan,drafts);return !!result.ok;}
+async function approveRiyaBatchSchedule(){
+ const result=commitRiyaSchedule(state.riyaScheduleReview,state.lastAiTasks||[]);
+ if(!result.ok){toast(result.reason||'Could not save schedule.');return;}
+ const message=`All set — I've saved ${result.count} session${result.count===1?'':'s'} to your RIYA plan. You can review them in Schedule & review.`;
+ await saveConversationMessage('assistant',message,null);state.aiMessages.push({id:uid(),role:'assistant',content:message});persist();try{await persistAndVerify()}catch(error){toast(error.message);return}render();toast('Schedule saved and verified in RIYA.');
+}
+async function riyaCapture(){const el=$('riyaQuickNote'),message=(el?.value||'').trim();if(!message){toast('Tell RIYA what you would like to organise.');return;}state.aiMessages=state.aiMessages||[];const turnId=uid();state.aiMessages.push({id:uid(),turn_id:turnId,role:'user',content:message});el.value='';renderRiyaConversation();const send=$('riyaSendBtn');if(send){send.disabled=true;send.textContent='Thinking…'}const host=$('riyaConversation');const loading=document.createElement('div');loading.id='riyaThinking';loading.className='small';loading.textContent='RIYA is thinking…';host.appendChild(loading);try{let replyNotice='';const res=await fetch('/api/chat',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({conversation_id:state.conversationId,turn_id:state.aiMessages[state.aiMessages.length-1]?.turn_id||uid(),user_message:message,user_message_id:state.aiMessages[state.aiMessages.length-1]?.id||uid(),messages:state.aiMessages.slice(-24),tasks:activeTasks().flatMap(t=>taskSessions(t).length?taskSessions(t).map(z=>({title:t.title,date:z.date,start:z.start,end:z.end,duration:z.duration,priority:t.priority,kind:t.kind,status:z.status||t.status,deadline:t.deadline})):({title:t.title,date:t.date,start:t.start,end:t.end,duration:t.duration,priority:t.priority,kind:t.kind,status:t.status,deadline:t.deadline})),draft_tasks:state.lastAiTasks||[],priority_pending:!!state.riyaPriorityPending,settings:state.settings,current_date:localISO()})});const data=await res.json();if(!res.ok)throw new Error(data.error||'Local AI request failed');if(data.conversation_id)state.conversationId=data.conversation_id;const preSyncSnapshot=JSON.parse(JSON.stringify(state));state.lastAiTasks=Array.isArray(data.tasks)?data.tasks:[];state.lastAiQuestions=Array.isArray(data.questions)?data.questions:[];state.riyaPriorityPending=!!data.priority_pending;await syncRiyaTasksToPlanner(state.lastAiTasks);
+if(data.schedule_preview){
+ state.riyaScheduleReview=data.schedule_preview;
+ if(data.schedule_auto_approve){
+  if(commitRiyaPreviewAutomatically(data.schedule_preview,state.lastAiTasks)){
+   replyNotice='I have finalised the requested schedule and saved it to your RIYA plan.';
+  }else{
+   state=preSyncSnapshot;replyNotice='I could not save that schedule because a conflict or invalid detail needs attention. No task or session changes were saved.';
+  }
+ }
+}
+let reply=replyNotice||data.reply||'I could not form a response. Please try again.';
+if(data.schedule_ready){const result=commitRiyaScheduledTask(state.lastAiTasks);if(!result.ok)reply=result.message;else{const placed=state.lastAiTasks.find(x=>x.priority_rank===1&&x.scheduled);reply=`Nice, ${placed.title} is on your plan for ${prettyDate(placed.date)} at ${formatTime(placed.start_time)}. What would you like to work on next?`;}}
+riyaLastReply=reply;state.aiMessages.push({id:uid(),turn_id:state.aiMessages[state.aiMessages.length-1]?.turn_id||null,role:'assistant',content:riyaLastReply});state.workingMemory=data.working_memory||state.workingMemory||{};persist();try{await persistAndVerify();}catch(saveError){toast('Task is visible in this session, but SQLite verification failed: '+saveError.message);}render();if($('appStatus'))$('appStatus').textContent='AI READY';if(riyaLastInputWasVoice){riyaLastInputWasVoice=false;speakLastRiyaReply();}}catch(err){const msg='I could not reach the local AI. Check that Ollama is running and RIYA was started using riya_server.py. Details: '+err.message;try{await saveConversationMessage('assistant',msg,state.aiMessages[state.aiMessages.length-1]?.turn_id||null)}catch(_){}state.aiMessages.push({id:uid(),role:'assistant',content:msg});renderRiyaConversation();toast('Could not connect to local AI.');}finally{document.getElementById('riyaThinking')?.remove();if(send){send.disabled=false;send.textContent='Send ➤'}}}
+function commitRiyaScheduledTask(drafts){
+ const t=(drafts||[]).find(x=>x.priority_rank===1&&!x.scheduled);
+ if(!t||!t.date||!t.start_time||!t.end_time||!t.duration_minutes)return {ok:false,message:"I have the date and start time, but still need the time block to be clear before adding it."};
+ const result=commitRiyaSchedule({entries:[{title:t.title,date:t.date,start_time:t.start_time,end_time:t.end_time,duration_minutes:t.duration_minutes}],conflicts:[]},drafts);
+ if(!result.ok)return {ok:false,message:result.reason||'I could not save that task.'};
+ log('Schedule approved',`${t.title} · ${prettyDate(t.date)} · ${t.start_time}–${t.end_time}`);
+ return {ok:true};
+}
+
+function discardRiyaBatchSchedule(){state.riyaScheduleReview=null;persist();render();toast('Proposal discarded. No schedule was saved.');}
+function renderRiyaTaskSuggestions(){const host=$('riyaTaskList');if(!host)return;const tasks=state.lastAiTasks||[];const count=$('riyaTaskCount');if(count)count.textContent=tasks.length+' task'+(tasks.length===1?'':'s');let out='';if(!tasks.length)out='<p class="small" style="margin:12px 0 3px">Your tasks will show up here as we talk.</p>';else{const ordered=tasks.map((t,i)=>({...t,_i:i})).sort((a,b)=>(a.priority_rank??999)-(b.priority_rank??999));out=ordered.map((t,pos)=>`<div style="border-top:1px solid #493b70;padding:10px 0"><div class="row between" style="align-items:flex-start;gap:8px"><b>${pos+1}. ${esc(t.title||'Untitled task')}</b>${t.priority_rank===1?'<span class="pill high">Top priority</span>':''}</div>${t.scheduled?`<div class="small" style="color:#83dfb5;margin-top:4px">✓ Scheduled · ${esc(t.date?prettyDate(t.date):'Multiple dates')} · ${t.start_time?esc(t.start_time)+'–'+esc(t.end_time):'See saved sessions below'}</div>`:t.missing_fields?.length?`<div class="small" style="color:#ffbd75;margin-top:4px">Still to work out: ${esc(t.missing_fields.join(', '))}</div>`:''}</div>`).join('')+(tasks.length>1&&state.riyaPriorityPending?'<div class="notice" style="margin-top:9px">Which one feels like the best place to start?</div>':'');}
+ const plan=state.riyaScheduleReview;if(plan){out+=`<div style="border:1px solid #7059b5;background:#2a2145;border-radius:15px;padding:12px;margin-top:13px"><div class="row between"><b>Schedule preview</b><span class="pill">Needs your approval</span></div><p class="small" style="margin:5px 0 9px">Check each proposed session. These are not saved yet.</p>${(plan.entries||[]).map((x,i)=>`<div style="display:flex;justify-content:space-between;gap:8px;border-top:1px solid #493b70;padding:8px 0"><span><b>${i+1}. ${esc(prettyDate(x.date))}</b><div class="small">${esc(x.title)}</div></span><b style="white-space:nowrap">${esc(x.start_time)}–${esc(x.end_time)}</b></div>`).join('')}${plan.conflicts?.length?`<div class="notice dangertext">${plan.conflicts.map(esc).join('<br>')}</div>`:''}<div class="actions"><button class="btn ghost" onclick="discardRiyaBatchSchedule()">Discard</button><button class="btn" ${plan.conflicts?.length?'disabled':''} onclick="approveRiyaBatchSchedule()">Approve & save plan</button></div></div>`;}
+ const saved=activeTasks().filter(t=>t.status==='scheduled').sort((a,b)=>(a.date+a.start).localeCompare(b.date+b.start));if(saved.length){out+='<div style="border-top:1px solid #493b70;margin-top:12px;padding-top:10px"><b>Saved schedule</b>';out+=saved.map(t=>`<div class="small" style="padding:5px 0">✓ ${esc(prettyDate(t.date))} · ${esc(t.start)}–${esc(t.end)} · ${esc(t.title)}</div>`).join('')+'</div>';}
+ host.innerHTML=out;}
+function reviewAiTask(i){const t=(state.lastAiTasks||[])[i];if(!t)return;openTaskForm(null,t.date||'');setTimeout(()=>{if($('taskTitle'))$('taskTitle').value=t.title||'';if($('taskDate'))$('taskDate').value=t.date||'';if($('taskDuration'))$('taskDuration').value=t.duration_minutes||'';if($('taskPriority'))$('taskPriority').value=['High','Medium','Low'].includes(t.priority)?t.priority:'';if($('taskKind'))$('taskKind').value=t.kind==='fixed'?'fixed':'flexible';toggleFixedFields();if($('taskStart'))$('taskStart').value=t.start_time||'';if($('taskEnd'))$('taskEnd').value=t.end_time||'';if($('taskDeadline'))$('taskDeadline').value=t.deadline||'';if($('taskPreferred'))$('taskPreferred').value=['Morning','Afternoon','Evening','Anytime'].includes(t.preferred_time)?t.preferred_time:'Anytime';if($('taskNotes'))$('taskNotes').value=t.notes||'';},80)}
+let riyaRecognition=null;
+function toggleRiyaVoice(){const SR=window.SpeechRecognition||window.webkitSpeechRecognition;if(!SR){toast('Speech recognition is not available in this browser. Try Microsoft Edge or Chrome.');return;}if(riyaRecognition){riyaRecognition.stop();return;}riyaRecognition=new SR();riyaRecognition.lang=$('riyaVoiceLang')?.value||'en-IN';riyaRecognition.interimResults=false;riyaRecognition.continuous=false;const btn=$('riyaMicBtn');riyaRecognition.onstart=()=>{if(btn)btn.textContent='⏹';toast('Listening…')};riyaRecognition.onresult=e=>{const text=e.results?.[0]?.[0]?.transcript||'';const box=$('riyaQuickNote');if(box)box.value=(box.value?box.value+' ':'')+text;riyaLastInputWasVoice=true;};riyaRecognition.onerror=e=>toast('Voice input: '+(e.error||'not available'));riyaRecognition.onend=()=>{riyaRecognition=null;if(btn)btn.textContent='🎙'};riyaRecognition.start();}
+const RIYA_PREFERRED_TTS_VOICE='Microsoft Sonia';
+let riyaVoiceFallbackNotified=false;
+function findRiyaSpeechVoice(){
+ const voices=window.speechSynthesis?.getVoices?.()||[];
+ const isUK=v=>/^en-GB/i.test(v.lang||'');
+ return voices.find(v=>isUK(v)&&new RegExp(RIYA_PREFERRED_TTS_VOICE,'i').test(v.name))
+  ||voices.find(v=>isUK(v)&&/sonia/i.test(v.name))
+  ||voices.find(v=>isUK(v))
+  ||voices.find(v=>/^en/i.test(v.lang||''))
+  ||null;
+}
+let riyaSpeaking=false;
+function updateSpeakButton(){const b=$('riyaSpeakBtn');if(!b)return;b.textContent=riyaSpeaking?'■ Stop':'▶ Speak';b.title=riyaSpeaking?'Stop speaking':'Speak last reply';}
+function cleanSpeechText(value){return String(value||'').replace(/\\*\\*(.*?)\\*\\*/g,'$1').replace(/[`*_#]/g,'').replace(/^[-•]\\s*/gm,'').replace(/\\s+/g,' ').trim();}
+function speakLastRiyaReply(){
+ if(!('speechSynthesis'in window)){toast('Speech output is not supported in this browser.');return;}
+ const synth=window.speechSynthesis;
+ if(riyaSpeaking){synth.cancel();riyaSpeaking=false;updateSpeakButton();return;}
+ if(!riyaLastReply){toast('RIYA has not replied yet.');return;}
+ const voices=synth.getVoices();
+ if(!voices.length){toast('Browser voices are still loading. Try again in a moment.');return;}
+ const voice=findRiyaSpeechVoice();const soniaAvailable=!!voice&&/sonia/i.test(voice.name);
+ if(!soniaAvailable&&!riyaVoiceFallbackNotified){toast('Microsoft Sonia is not available to this browser yet. Using an English voice.');riyaVoiceFallbackNotified=true;}
+ const utterance=new SpeechSynthesisUtterance(cleanSpeechText(riyaLastReply));
+ utterance.lang=soniaAvailable?'en-GB':(voice?.lang||'en-GB');if(voice)utterance.voice=voice;utterance.rate=0.96;utterance.pitch=1.02;
+ utterance.onstart=()=>{riyaSpeaking=true;updateSpeakButton();};utterance.onend=()=>{riyaSpeaking=false;updateSpeakButton();};utterance.onerror=()=>{riyaSpeaking=false;updateSpeakButton();};synth.speak(utterance);
+}
+function tasksView(){const q=(state.query||'').toLowerCase();let arr=activeTasks().filter(t=>t.status!=='cancelled'&&(!q||t.title.toLowerCase().includes(q))).sort((a,b)=>(a.date||'9999-99-99').localeCompare(b.date||'9999-99-99')||(a.start||'99:99').localeCompare(b.start||'99:99'));const groups={};arr.filter(t=>t.date&&/^\d{4}-\d{2}-\d{2}$/.test(t.date)).forEach(t=>(groups[t.date]??=[]).push(t));const rows=Object.entries(groups).map(([date,items])=>{const d=new Date(date+'T12:00:00');const dateLabel=d.toLocaleDateString('en-IN',{day:'2-digit',month:'short',year:'numeric'});const dayLabel=d.toLocaleDateString('en-IN',{weekday:'long'});return `<div class="task-date-group"><div class="task-date-cell"><strong>${dateLabel}</strong><span>${dayLabel}</span></div><div class="task-group-items">${items.map(t=>`<button class="task-list-item" onclick="proposeEdit('${t.id}')" title="Open task details"><span class="task-dot"></span><span class="task-time">${t.start?esc(formatTime(t.start)):'Not set'}</span><span class="task-title">${esc(t.title)}</span><span class="pill ${priorityClass(t.priority)}">${esc(t.priority||'—')}</span></button>`).join('')}</div></div>`}).join('');const undated=arr.filter(t=>!t.date||!/^\d{4}-\d{2}-\d{2}$/.test(t.date));const undatedHtml=undated.length?`<section class="card" style="margin:12px 0"><div class="row between"><b>Tasks awaiting a date</b><span class="pill">${undated.length}</span></div><p class="small">These tasks were captured in conversation. Add a date when you're ready to schedule them.</p>${undated.map(taskRow).join('')}</section>`:'';return `<div class="tasks-heading"><div><h1>My Tasks</h1><p class="sub">Tasks captured in conversation and tasks organised by date.</p></div><button class="btn add-task-btn" onclick="openTaskForm()">＋ Add Task</button></div><div class="tasks-search"><input class="field" placeholder="Search tasks..." value="${esc(state.query||'')}" oninput="state.query=this.value;render()"></div>${undatedHtml}<div class="tasks-table"><div class="tasks-table-head"><div>▦ &nbsp; Date &amp; Day</div><div>◷ &nbsp; Tasks</div></div>${rows||'<div class="card empty" style="margin:12px"><b>No dated tasks yet</b><p class="small">Tasks without dates are listed above. Add a date to place them on the calendar.</p></div>'}</div><button class="btn full tasks-calendar-btn" onclick="navigate('calendar')">▦ &nbsp; Calendar</button>`}
+function formatTime(value){if(!value)return 'Not set';const [hh,mm]=value.split(':').map(Number);const d=new Date();d.setHours(hh,mm||0,0,0);return d.toLocaleTimeString('en-IN',{hour:'2-digit',minute:'2-digit',hour12:true})}
+function scheduleViewLegacy(){const date=state.selectedDate,items=scheduledOn(date),unscheduled=activeTasks().filter(t=>t.date===date&&t.status==='pending');const total=items.filter(t=>t.status!=='completed').reduce((n,t)=>n+t.duration,0);return `<div style="margin:0 0 14px"><button class="btn secondary full" style="display:block;width:100%;text-align:left;padding:13px 16px;font-size:14px" onclick="navigate('home')" aria-label="Back to RIYA conversation">←&nbsp; Back to conversation</button></div><h1>Schedule &amp; review</h1><p class="sub">Review existing commitments and build a proposal for unscheduled tasks.</p><div class="card"><label for="scheduleDate">Planning date</label><input class="field" id="scheduleDate" type="date" value="${date}" onchange="state.selectedDate=this.value;render()"><div class="row between"><span class="small">${items.length} scheduled · ${formatDuration(total)} planned</span><button class="btn secondary" onclick="openTaskForm(null,'${date}')">＋ Add task</button></div></div>
+${items.length?`<h2>Approved schedule</h2>${items.map(t=>`<div class="timeline"><div class="time">${esc(t.start)}</div><div class="event ${t.kind==='fixed'?'fixed':''}"><div class="row between"><b>${esc(t.title)}</b><span class="pill ${priorityClass(t.priority)}">${esc(t.priority)}</span></div><div class="small">${esc(t.start)}–${esc(t.end)} · ${formatDuration(t.duration)} · ${t.status}</div><div class="actions"><button class="btn secondary" onclick="proposeEdit('${t.id}')">Edit (approval)</button><button class="btn ghost" onclick="proposeMove('${t.id}')">Move (approval)</button></div></div></div>`).join('')}`:`<div class="card empty">No approved tasks on this date yet.</div>`}
+${unscheduled.length?`<h2>Awaiting scheduling</h2><div class="card">${unscheduled.map(t=>`<div class="taskrow"><div class="taskmain"><b>${esc(t.title)}</b><div class="taskmeta">${formatDuration(t.duration)} · ${esc(t.priority)} priority · ${t.kind}</div></div><button class="btn secondary" onclick="buildProposal('${t.id}')">Place</button></div>`).join('')}<button class="btn full" onclick="buildProposal()">Build schedule for ${unscheduled.length} task(s)</button></div>`:''}
+${state.proposal?proposalView():''}<p class="footnote">Approved entries are protected. RIYA proposes placements only in free time. No proposed change is saved until you approve it.</p>`}
+function proposalView(){const p=state.proposal;if(!p)return '';return `<div class="card" id="proposal"><div class="row between"><h2 style="margin:0">Schedule proposal</h2><span class="pill">Not saved</span></div><p class="small">Review every proposed slot. Existing approved tasks remain unchanged.</p>${p.items.map(x=>`<div class="taskrow"><div class="taskmain"><b>${esc(x.title)}</b><div class="taskmeta">${prettyDate(x.date)} · ${esc(x.start||'Unscheduled')} ${x.end?'– '+esc(x.end):''}</div></div><span class="pill ${x.start?'low':'high'}">${x.start?'Proposed':'No slot'}</span></div>`).join('')}${p.conflicts.length?`<div class="notice dangertext"><b>Conflicts found — choose how to resolve them</b><br>${p.conflicts.map(c=>`<div style="margin-top:7px"><b>${esc(typeof c==='string'?c:c.message)}</b>${typeof c==='object'?`<div class="actions"><button class="btn ghost" onclick="openTaskForm('${c.taskId}')">Edit new item</button>${c.otherId?`<button class="btn secondary" onclick="openTaskForm('${c.otherId}')">Review existing item</button>`:''}</div>`:''}</div>`).join('')}</div>`:''}${p.unplaced.length?`<div class="notice">${p.unplaced.length} task(s) could not fit: ${p.unplaced.map(esc).join(', ')}. Edit the task date, duration or preferred time, then build a new proposal.</div><button class="btn secondary full" onclick="navigate('tasks')">Review unscheduled tasks</button>`:''}<div class="actions"><button class="btn ghost" onclick="discardProposal()">Discard</button><button class="btn" onclick="approveProposal()" ${p.conflicts.length||p.unplaced.length?'disabled':''}>Approve & save</button></div></div>`}
+function taskRow(t){return `<div class="card taskrow" style="margin:9px 0;padding:13px"><div class="row between" style="gap:8px;align-items:flex-start"><div style="min-width:0"><b>${esc(t.title)}</b><div class="small" style="margin-top:5px">${t.start?esc(formatTime(t.start)):'Time not set'}${t.end?' – '+esc(formatTime(t.end)):''} · ${formatDuration(t.duration||0)}</div></div><span class="pill ${priorityClass(t.priority)}">${esc(t.priority||'—')}</span></div><div class="row between" style="margin-top:10px"><span class="small">${esc(t.status||'pending')} · ${t.kind==='fixed'?'Fixed':'Flexible'}</span><button class="btn secondary" onclick="proposeEdit('${t.id}')">View / Edit</button></div></div>`}
+function calendarView(){const [y,m]=state.calendarMonth.split('-').map(Number),first=new Date(y,m-1,1),offset=(first.getDay()+6)%7,days=new Date(y,m,0).getDate(),today=localISO(),monthName=first.toLocaleDateString('en-IN',{month:'long',year:'numeric'});let cells='';for(let i=0;i<offset;i++)cells+='<div></div>';for(let d=1;d<=days;d++){const iso=`${y}-${pad(m)}-${pad(d)}`,has=activeTasks().some(t=>t.date===iso&&t.status!=='cancelled');cells+=`<button class="calday ${iso===today?'today':''} ${iso===state.selectedDate?'selected':''}" onclick="state.selectedDate='${iso}';state.tab='calendar';render()">${d}${has?'<i class="dot"></i>':''}</button>`}const day=activeTasks().filter(t=>t.date===state.selectedDate).sort((a,b)=>(a.start||'99:99').localeCompare(b.start||'99:99'));return `<h1>Calendar</h1><p class="sub">Choose a date to see its tasks and commitments.</p><div class="card"><div class="row between"><button class="iconbtn" onclick="moveMonth(-1)">‹</button><b>${monthName}</b><button class="iconbtn" onclick="moveMonth(1)">›</button></div><div class="calendar" style="margin-top:12px">${['Mon','Tue','Wed','Thu','Fri','Sat','Sun'].map(x=>`<span class="weekday">${x}</span>`).join('')}${cells}</div></div><div class="sectionhead"><h2>${prettyDate(state.selectedDate,{weekday:'long',day:'numeric',month:'long'})}</h2><button class="btn secondary" onclick="openTaskForm(null,'${state.selectedDate}')">＋ Add</button></div>${day.map(taskRow).join('')||'<div class="card empty">Nothing planned for this date.</div>'}${activeTasks().some(t=>!t.date&&t.status!=='cancelled')?`<section class="card" style="margin-top:12px"><b>Tasks awaiting a date</b><p class="small">Captured tasks without a date are shown here until you assign one.</p>${activeTasks().filter(t=>!t.date&&t.status!=='cancelled').map(taskRow).join('')}</section>`:''}<button class="btn full" onclick="navigate('schedule')">Open day schedule</button><div class="sectionhead"><h2>History</h2><button class="btn secondary" onclick="navigate('history')">View all</button></div>`}
+function moveMonth(n){const [y,m]=state.calendarMonth.split('-').map(Number),d=new Date(y,m-1+n,1);state.calendarMonth=`${d.getFullYear()}-${pad(d.getMonth()+1)}`;render()}
+function historyView(){return `<h1>History</h1><p class="sub">Your saved conversations and approved task activity.</p><section class="card"><div class="row between"><b>Conversations</b><button class="btn secondary" onclick="startNewConversation()">＋ New chat</button></div>${(state.conversationList||[]).map(c=>`<button class="btn ghost full" style="text-align:left;margin-top:8px" onclick="openSavedConversation('${esc(c.id)}')"><b>${esc(c.title||'Conversation')}</b><div class="small">${Number(c.message_count)||0} messages · ${esc((c.updated_at||'').replace('T',' ').slice(0,16))}</div></button>`).join('')||'<p class="small">Your conversations will appear here.</p>'}</section>${state.history.length?state.history.map(h=>`<div class="historyitem"><b>${esc(h.action)}</b><div>${esc(h.detail)}</div><div class="small">${new Date(h.at).toLocaleString()}</div></div>`).join(''):'<div class="card empty">No activity yet. Approved changes will appear here.</div>'}<button class="btn secondary full" onclick="exportData()">Export history and tasks</button>`}
+function settingsView(){const cats=Array.isArray(state.settings.riya_categories)?state.settings.riya_categories:defaultRiyaCategories;return `<h1>Settings</h1><p class="sub">Configure how RIYA builds schedules. Your confirmed policies are enabled below.</p><div class="card"><h2 style="margin-top:0">Scheduling policies</h2>${policyRow('Overlap handling','Ask me before resolving any overlap.')}${policyRow('Task priority','Ask me to choose priority for every task.')}${policyRow('Missing duration','Ask me for the duration before scheduling.')}${policyRow('Schedule approval','Require my approval for every new schedule and every modification.')}</div><div class="card"><h2 style="margin-top:0">My four task categories</h2><p class="small">Edit the names and definitions. RIYA will use these as your classification guide. The four core categories remain available.</p>${cats.map(c=>`<div style="border-top:1px solid #493b70;padding:12px 0"><label>Category name</label><input class="field riya-category-label" data-category-id="${esc(c.id)}" maxlength="60" value="${esc(c.label)}"><label>What belongs here?</label><textarea class="field riya-category-description" data-category-id="${esc(c.id)}" rows="2" maxlength="500">${esc(c.description)}</textarea></div>`).join('')}<button class="btn full" onclick="saveRiyaCategories()">Save my categories</button></div><div class="card"><h2 style="margin-top:0">Available hours</h2><div class="formgrid"><div><label>Day starts</label><input class="field" type="time" id="workStart" value="${esc(state.settings.workStart)}"></div><div><label>Day ends</label><input class="field" type="time" id="workEnd" value="${esc(state.settings.workEnd)}"></div><div><label>Buffer between tasks (minutes)</label><input class="field" type="number" min="0" max="120" step="5" id="buffer" value="${state.settings.buffer}"></div></div><button class="btn full" onclick="saveSettings()">Save scheduling settings</button></div><div class="card"><h2 style="margin-top:0">Reminders</h2><div class="row between"><div><b>Windows background reminders</b><div class="small">Runs separately from Edge after you install the RIYA reminder worker.</div></div><input class="switch" id="notifications" type="checkbox" ${state.settings.notifications?'checked':''} onchange="toggleNotifications(this.checked)"></div><label style="margin-top:12px">Remind me before a task (minutes)</label><input class="field" type="number" id="reminderMinutes" min="0" max="120" value="${state.settings.reminderMinutes}"><button class="btn secondary full" onclick="saveReminderSettings()">Save reminder settings</button><p class="footnote">Requires the RIYA Background Reminders worker. Your PC must be on and you must be signed in to Windows.</p></div><div class="card"><h2 style="margin-top:0">Data management</h2><div class="actions"><button class="btn secondary" onclick="exportData()">Export JSON backup</button><button class="btn secondary" onclick="$('importFile').click()">Import backup</button></div><input id="importFile" class="hidden" type="file" accept="application/json" onchange="importData(event)"><button class="btn ghost full" style="margin-top:9px" onclick="navigate('history')">View activity history</button><button class="btn danger full" style="margin-top:9px" onclick="confirmClearData()">Clear all local data</button></div><div class="card"><h2 style="margin-top:0">About RIYA</h2><p class="small">RIYA Local AI · Ollama + Qwen3 · Python backend.</p><p class="small">Your tasks and settings are stored locally in SQLite with a browser backup. Export a backup regularly. Local AI conversation is connected. Browser speech input/output is available where supported; wake-word detection is a later phase.</p></div>`}
+function policyRow(title,desc){return `<div class="taskrow"><div class="taskmain"><b>${title}</b><div class="taskmeta">${desc}</div></div><span class="pill low">Enabled</span></div>`}
+function openTaskForm(id=null,date=state.selectedDate){const t=id?state.tasks.find(x=>x.id===id):null;const d=t||{title:'',date:date||localISO(),duration:'',priority:'',kind:'flexible',start:'',end:'',deadline:'',preferred:'Anytime',notes:''};showModal(`<div class="modalhead"><h2>${t?'Edit task':'Add a task'}</h2><button class="iconbtn" onclick="closeModal()">✕</button></div><form id="taskForm" onsubmit="saveTask(event,'${t?t.id:''}')"><div class="formgrid"><div class="wide"><label for="taskTitle">Task / commitment name *</label><input class="field" id="taskTitle" maxlength="100" required value="${esc(d.title)}" placeholder="e.g. Prepare for exam"></div><div><label for="taskDate">Date *</label><input class="field" id="taskDate" type="date" required value="${esc(d.date)}"></div><div><label for="taskDuration">Duration (minutes) *</label><input class="field" id="taskDuration" type="number" min="5" max="1440" step="5" required value="${d.duration||''}" placeholder="e.g. 90"></div><div><label for="taskPriority">Priority *</label><select class="field" id="taskPriority" required><option value="">Choose priority</option>${['High','Medium','Low'].map(x=>`<option ${d.priority===x?'selected':''}>${x}</option>`).join('')}</select></div><div><label for="taskKind">Time type *</label><select class="field" id="taskKind" onchange="toggleFixedFields()"><option value="flexible" ${d.kind==='flexible'?'selected':''}>Flexible</option><option value="fixed" ${d.kind==='fixed'?'selected':''}>Fixed commitment</option></select></div><div id="fixedStartWrap" class="${d.kind==='fixed'?'':'hidden'}"><label for="taskStart">Start time *</label><input class="field" id="taskStart" type="time" value="${esc(d.start)}"></div><div id="fixedEndWrap" class="${d.kind==='fixed'?'':'hidden'}"><label for="taskEnd">End time *</label><input class="field" id="taskEnd" type="time" value="${esc(d.end)}"></div><div><label for="taskPreferred">Preferred time</label><select class="field" id="taskPreferred">${['Anytime','Morning','Afternoon','Evening'].map(x=>`<option ${d.preferred===x?'selected':''}>${x}</option>`).join('')}</select></div><div><label for="taskDeadline">Deadline (optional)</label><input class="field" id="taskDeadline" type="date" value="${esc(d.deadline)}"></div><div class="wide"><label for="taskNotes">Notes (optional)</label><textarea class="field" id="taskNotes" rows="2" maxlength="500" placeholder="Extra details">${esc(d.notes)}</textarea></div></div><p class="hint">RIYA asks for priority and duration before scheduling. Nothing is automatically placed on your calendar.</p><div class="actions"><button type="button" class="btn ghost" onclick="closeModal()">Cancel</button><button type="submit" class="btn">${t?'Review changes':'Add task'}</button></div></form>`);toggleFixedFields()}
+function toggleFixedFields(){const fixed=$('taskKind').value==='fixed';$('fixedStartWrap').classList.toggle('hidden',!fixed);$('fixedEndWrap').classList.toggle('hidden',!fixed);$('taskStart').required=fixed;$('taskEnd').required=fixed}
+async function saveTask(e,id){e.preventDefault();const title=$('taskTitle').value.trim(),date=$('taskDate').value,duration=Number($('taskDuration').value),priority=$('taskPriority').value,kind=$('taskKind').value,start=$('taskStart').value,end=$('taskEnd').value,deadline=$('taskDeadline').value;if(!title||!validISODate(date)||!duration||!priority){toast('Please enter a valid calendar date, title, duration and priority.');return}if(duration<5||duration>1440){toast('Duration must be between 5 minutes and 24 hours.');return}if(deadline&&(!validISODate(deadline)||deadline<date)){toast('Deadline must be a valid date on or after the planned date.');return}if(kind==='fixed'){const a=parseTime(start),b=parseTime(end);if(a===null||b===null||b<=a||b-a!==duration){toast('For a fixed commitment, end time must be after start and match the duration.');return}}
+ const data={title,date,duration,priority,kind,start:kind==='fixed'?start:'',end:kind==='fixed'?end:'',deadline,preferred:$('taskPreferred').value,notes:$('taskNotes').value.trim()};if(id){const old=state.tasks.find(t=>t.id===id);if(!old)return;const changed=Object.keys(data).some(k=>old[k]!==data[k]);if(!changed){closeModal();return}state.proposal={type:'edit',taskId:id,old:{...old},changes:data,items:[{...old,...data,start:kind==='fixed'?start:old.start,end:kind==='fixed'?end:old.end}],conflicts:[],unplaced:[]};closeModal();render();showEditApproval(id,data);return}
+ const duplicate=activeTasks().find(x=>x.date===date&&x.title.trim().toLowerCase()===title.toLowerCase());if(duplicate){showModal(`<div class="modalhead"><h2>Possible duplicate</h2><button class="iconbtn" onclick="closeModal()">✕</button></div><p>There is already a task named <b>${esc(duplicate.title)}</b> on ${prettyDate(date)}.</p><div class="actions"><button class="btn ghost" onclick="closeModal()">Cancel</button><button class="btn secondary" onclick="closeModal();openTaskForm('${duplicate.id}')">Review existing task</button></div>`);return}const task={id:uid(),...data,status:'pending',createdAt:new Date().toISOString(),completedAt:null};state.tasks.push(task);persist();try{await persistAndVerify()}catch(error){state.tasks=state.tasks.filter(x=>x.id!==task.id);persist();toast(error.message);return}log('Task added',`${title} · ${prettyDate(date)} · ${priority} priority · ${formatDuration(duration)}`);closeModal();state.tab='tasks';state.selectedDate=date;render();toast('Task collected. Build a schedule when ready.')}
+function showEditApproval(id,changes){const t=state.tasks.find(x=>x.id===id);const updated={...t,...changes};showModal(`<div class="modalhead"><h2>Approve task changes?</h2><button class="iconbtn" onclick="closeModal()">✕</button></div><div class="notice">This edit will change an existing task. Nothing is saved until you approve.</div><div class="card"><b>${esc(t.title)}</b><p class="small">Current: ${prettyDate(t.date)} · ${t.start||'Unscheduled'} · ${formatDuration(t.duration)} · ${t.priority}</p><p><b>Proposed:</b> ${prettyDate(updated.date)} · ${updated.start||'Unscheduled'} · ${formatDuration(updated.duration)} · ${updated.priority}</p></div><div class="actions"><button class="btn ghost" onclick="closeModal()">Keep original</button><button class="btn" onclick="approveEdit('${id}')">Approve changes</button></div>`)}
+async function approveEdit(id){const p=state.proposal;if(!p||p.type!=='edit'||p.taskId!==id)return;const t=state.tasks.find(x=>x.id===id);if(!t)return;Object.assign(t,p.changes);if(t.kind==='flexible'){t.start='';t.end='';t.status='pending'}else{t.status='pending'}state.proposal=null;persist();try{await persistAndVerify()}catch(error){toast(error.message);return}log('Task edited',t.title+' · '+prettyDate(t.date));closeModal();render();toast('Task changes approved. Schedule it when ready.')}
+function completeTask(id){const t=state.tasks.find(x=>x.id===id);if(!t||t.status==='cancelled')return;if(t.status==='completed'){showModal(`<div class="modalhead"><h2>Reopen task?</h2><button class="iconbtn" onclick="closeModal()">✕</button></div><p>Mark “${esc(t.title)}” as pending again?</p><div class="actions"><button class="btn ghost" onclick="closeModal()">Cancel</button><button class="btn" onclick="setTaskStatus('${id}','scheduled')">Reopen</button></div>`);return}showModal(`<div class="modalhead"><h2>Complete task?</h2><button class="iconbtn" onclick="closeModal()">✕</button></div><p>Confirm that you completed “${esc(t.title)}”.</p><div class="actions"><button class="btn ghost" onclick="closeModal()">Not yet</button><button class="btn" onclick="setTaskStatus('${id}','completed')">Yes, completed</button></div>`)}
+async function setTaskStatus(id,status){const t=state.tasks.find(x=>x.id===id);if(!t)return;if(status==='scheduled'&&(!t.start||!t.end))status='pending';t.status=status;t.completedAt=status==='completed'?new Date().toISOString():null;if(Array.isArray(t.sessions)){for(const session of t.sessions){if(status==='completed'&&session.status==='scheduled')session.status='completed';else if(status==='cancelled'&&session.status==='scheduled')session.status='cancelled';else if(status==='scheduled'&&session.status==='completed')session.status='scheduled';}}if(!persist()){toast('Could not save this status change.');return}try{await persistAndVerify()}catch(error){toast(error.message);return}log(status==='completed'?'Task completed':status==='cancelled'?'Task cancelled':'Task reopened',t.title);closeModal();render()}
+function cancelTask(id){const t=state.tasks.find(x=>x.id===id);if(!t)return;showModal(`<div class="modalhead"><h2>Cancel task?</h2><button class="iconbtn" onclick="closeModal()">✕</button></div><p>“${esc(t.title)}” will be marked cancelled. The history will be retained.</p><div class="actions"><button class="btn ghost" onclick="closeModal()">Keep task</button><button class="btn danger" onclick="setTaskStatus('${id}','cancelled')">Cancel task</button></div>`)}
+function findSlot(task,occupied,settings){const dayStart=parseTime(settings.workStart),dayEnd=parseTime(settings.workEnd);if(dayStart===null||dayEnd===null||dayEnd<=dayStart)return null;const dur=task.duration,buffer=Number(settings.buffer)||0;const preferred={Morning:[dayStart,720],Afternoon:[720,1020],Evening:[1020,dayEnd],Anytime:[dayStart,dayEnd]}[task.preferred]||[dayStart,dayEnd];const ranges=[[Math.max(dayStart,preferred[0]),Math.min(dayEnd,preferred[1])],[dayStart,dayEnd]];const candidates=[];for(const [lo,hi] of ranges){for(let s=Math.ceil(lo/15)*15;s+dur<=hi;s+=15){const candidate={start:timeText(s),end:timeText(s+dur)};const clash=occupied.some(o=>{const a=parseTime(o.start),b=parseTime(o.end),cs=s,ce=s+dur;return a!==null&&b!==null&&cs<b+buffer&&ce>a-buffer});if(!clash)candidates.push({s,score:Math.abs((s+dur/2)-((preferred[0]+preferred[1])/2))});}if(candidates.length)break;}candidates.sort((a,b)=>a.score-b.score||a.s-b.s);return candidates.length?{start:timeText(candidates[0].s),end:timeText(candidates[0].s+dur)}:null}
+function buildProposal(singleId=null){const date=state.selectedDate,tasks=activeTasks().filter(t=>t.date===date&&t.status==='pending'&&(!singleId||t.id===singleId));if(!tasks.length){toast('No unscheduled tasks for this date.');return}const fixed=tasks.filter(t=>t.kind==='fixed'),flex=tasks.filter(t=>t.kind==='flexible').sort((a,b)=>({High:0,Medium:1,Low:2}[a.priority]-{High:0,Medium:1,Low:2}[b.priority])||(a.deadline||'9999').localeCompare(b.deadline||'9999'));const occupied=scheduledOn(date).filter(t=>t.status==='scheduled').map(t=>({id:t.taskId,start:t.start,end:t.end,title:t.title}));const proposed=[],conflicts=[],unplaced=[];if(date<localISO())conflicts.push({message:'This date is in the past. Choose a future date before scheduling.',taskId:tasks[0]?.id,otherId:null});for(const t of [...fixed,...flex]){if(t.deadline&&date>t.deadline)conflicts.push({message:`${t.title}: planned date is later than its deadline (${prettyDate(t.deadline)}).`,taskId:t.id,otherId:null})}for(const t of fixed){const a=parseTime(t.start),b=parseTime(t.end);if(a===null||b===null||b<=a){conflicts.push({message:`${t.title}: invalid fixed time.`,taskId:t.id,otherId:null});continue}const hit=occupied.find(o=>{const x=parseTime(o.start),y=parseTime(o.end);return a<y&&b>x});const hit2=proposed.find(o=>a<parseTime(o.end)&&b>parseTime(o.start));if(hit||hit2){conflicts.push({message:`${t.title} overlaps with ${(hit||hit2).title}. Choose which item to change.`,taskId:t.id,otherId:(hit||hit2).id||null});continue}proposed.push({...t});occupied.push({id:t.id,start:t.start,end:t.end,title:t.title})}
+ for(const t of flex){const slot=findSlot(t,occupied,state.settings);if(!slot){unplaced.push(t.title);proposed.push({...t,start:'',end:''});continue}proposed.push({...t,...slot});occupied.push({start:slot.start,end:slot.end,title:t.title})}
+ state.proposal={type:'schedule',date,items:proposed,conflicts,unplaced};render();setTimeout(()=>$('proposal')?.scrollIntoView({behavior:'smooth',block:'nearest'}),50)}
+async function approveProposal(){const p=state.proposal;if(!p||p.type!=='schedule')return;if(p.conflicts.length||p.unplaced.length){toast('Resolve all conflicts and unscheduled tasks first.');return}const entries=p.items.map(item=>({task_id:item.id,title:item.title,date:p.date,start_time:item.start,end_time:item.end,duration_minutes:parseTime(item.end)-parseTime(item.start)}));const result=commitRiyaSchedule({entries,conflicts:[]},[]);if(!result.ok){toast(result.reason);return}try{await persistAndVerify()}catch(error){toast(error.message);return}state.selectedDate=p.date;render();toast('Schedule approved, saved and verified.')}
+function discardProposal(){state.proposal=null;render();toast('Proposal discarded. No changes were saved.')}
+function proposeMove(id){const t=state.tasks.find(x=>x.id===id);if(!t)return;showModal(`<div class="modalhead"><h2>Move scheduled task</h2><button class="iconbtn" onclick="closeModal()">✕</button></div><p class="small">Choose a new date and time. The current slot remains protected until you approve.</p><form onsubmit="submitMove(event,'${id}')"><label>New date</label><input class="field" id="moveDate" type="date" required value="${t.date}"><label>New start time</label><input class="field" id="moveStart" type="time" required value="${t.start}"><label>New end time</label><input class="field" id="moveEnd" type="time" required value="${t.end}"><div class="actions"><button class="btn ghost" type="button" onclick="closeModal()">Cancel</button><button class="btn" type="submit">Review move</button></div></form>`)}
+function submitMove(e,id){e.preventDefault();const t=state.tasks.find(x=>x.id===id),date=$('moveDate').value,start=$('moveStart').value,end=$('moveEnd').value,a=parseTime(start),b=parseTime(end);if(!t||!validISODate(date)||date<localISO()||a===null||b===null||b<=a||b-a!==Number(t.duration)){toast('Choose a valid future date and an end time matching the task duration.');return}const conflict=activeTasks().find(x=>x.id!==id&&x.date===date&&x.start&&x.end&&overlaps({start,end},{start:x.start,end:x.end}));if(conflict){showModal(`<div class="modalhead"><h2>Schedule overlap detected</h2><button class="iconbtn" onclick="closeModal()">✕</button></div><div class="notice dangertext">Your proposed time for <b>${esc(t.title)}</b> overlaps with <b>${esc(conflict.title)}</b>.</div><p>Which item would you like to review? RIYA will not move either item automatically.</p><div class="actions"><button class="btn ghost" onclick="closeModal()">Choose another time</button><button class="btn secondary" onclick="closeModal();openTaskForm('${conflict.id}')">Review existing task</button></div>`);return}showModal(`<div class="modalhead"><h2>Approve move?</h2><button class="iconbtn" onclick="closeModal()">✕</button></div><div class="card"><b>${esc(t.title)}</b><p class="small">Current: ${prettyDate(t.date)} · ${t.start}–${t.end}</p><p>Proposed: ${prettyDate(date)} · ${start}–${end}</p></div><div class="actions"><button class="btn ghost" onclick="closeModal()">Keep current</button><button class="btn" onclick="approveMove('${id}','${date}','${start}','${end}')">Approve move</button></div>`)}
+async function approveMove(id,date,start,end){const t=state.tasks.find(x=>x.id===id);if(!t||['completed','cancelled'].includes(t.status)){toast('This task cannot be moved in its current status.');return}if(!validISODate(date)||date<localISO()||parseTime(start)===null||parseTime(end)===null||parseTime(end)<=parseTime(start)||parseTime(end)-parseTime(start)!==Number(t.duration)){toast('Please choose a valid date and time matching the task duration.');return}const snapshot=JSON.parse(JSON.stringify(state));try{t.sessions=Array.isArray(t.sessions)?t.sessions:[];if(t.status==='scheduled'&&t.date&&t.start&&t.end&&!t.sessions.length)t.sessions.push({id:t.id+'-legacy',date:t.date,start:t.start,end:t.end,duration:Number(t.duration),status:'scheduled'});const current=t.sessions.find(s=>s.status==='scheduled'&&(s.date===t.date&&s.start===t.start&&s.end===t.end));const clash=allScheduledSessions().find(s=>s.status==='scheduled'&&s.id!==current?.id&&s.date===date&&parseTime(s.start)<parseTime(end)&&parseTime(s.end)>parseTime(start));if(clash)throw new Error(`Overlaps with ${clash.title}.`);if(current)current.status='rescheduled';t.sessions.push({id:uid(),date,start,end,duration:Number(t.duration),status:'scheduled'});t.date=date;t.start=start;t.end=end;t.status='scheduled';state.history.unshift({id:uid(),at:new Date().toISOString(),action:'Task moved',detail:`${t.title}: ${prettyDate(date)} ${start}–${end}`});if(!persist())throw new Error('Could not save the move.');await persistAndVerify();const stored=JSON.parse(localStorage.getItem(STORE)||'{}');if(!(stored.tasks||[]).some(x=>x.id===t.id&&x.sessions?.some(s=>s.date===date&&s.start===start&&s.end===end&&s.status==='scheduled')))throw new Error('Move verification failed.')}catch(err){state=snapshot;try{localStorage.setItem(STORE,JSON.stringify({...state,proposal:null}))}catch(e){}toast(err.message);return}closeModal();state.selectedDate=date;render();toast('Move saved and verified.')}
+function proposeEdit(id){openTaskForm(id)}
+function showModal(html){$('modalRoot').innerHTML=`<div class="modalback" onclick="if(event.target===this)closeModal()"><div class="modal">${html}</div></div>`}
+function closeModal(){$('modalRoot').innerHTML=''}
+async function saveRiyaCategories(){const current=Array.isArray(state.settings.riya_categories)?state.settings.riya_categories:defaultRiyaCategories;const categories=current.map(c=>{const label=document.querySelector(`.riya-category-label[data-category-id=\"${c.id}\"]`)?.value.trim()||'';const description=document.querySelector(`.riya-category-description[data-category-id=\"${c.id}\"]`)?.value.trim()||'';return {...c,label,description}});if(categories.some(c=>!c.label||!c.description)){toast('Each category needs a name and definition.');return}try{const response=await fetch('/api/riya/categories',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({categories})});const result=await response.json();if(!response.ok||!result.ok)throw new Error(result.error||'Could not save categories.');state.settings.riya_categories=result.categories;persist();await persistAndVerify();log('Task categories updated','Updated the four RIYA task category definitions.');render();toast('Your four task categories are saved.')}catch(error){toast(error.message||'Could not save categories.')}}
+function saveSettings(){const start=$('workStart').value,end=$('workEnd').value,buffer=Number($('buffer').value);if(parseTime(start)===null||parseTime(end)===null||parseTime(end)<=parseTime(start)){toast('End of day must be later than start.');return}if(!Number.isInteger(buffer)||buffer<0||buffer>120){toast('Buffer must be between 0 and 120 minutes.');return}state.settings={...state.settings,workStart:start,workEnd:end,buffer};persist();log('Settings updated',`Working hours ${start}–${end}; buffer ${buffer} min`);toast('Settings saved.')}
+async function toggleNotifications(on){state.settings.notifications=!!on;persist();try{await persistAndVerify();toast(on?'Background reminders enabled. Install the RIYA reminder worker to receive alerts while Edge is closed.':'Background reminders disabled.')}catch(error){state.settings.notifications=!on;$('notifications').checked=!on;toast(error.message)}}
+async function saveReminderSettings(){const n=Number($('reminderMinutes').value);if(!Number.isInteger(n)||n<0||n>120){toast('Reminder lead time must be 0–120 minutes.');return}state.settings.reminderMinutes=n;persist();try{await persistAndVerify();toast('Reminder settings saved and verified.')}catch(error){toast(error.message)}}
+// Reminder delivery is handled by riya_reminder_worker.py; do not also notify from the browser.
+function checkReminders(){return;}
+function exportData(){const data={app:'RIYA',version:1,exportedAt:new Date().toISOString(),tasks:state.tasks,history:state.history,settings:state.settings};const blob=new Blob([JSON.stringify(data,null,2)],{type:'application/json'}),url=URL.createObjectURL(blob),a=document.createElement('a');a.href=url;a.download=`riya-backup-${localISO()}.json`;a.click();URL.revokeObjectURL(url);toast('Backup exported.')}
+async function applyImport(d){if(!d)return;state.tasks=d.tasks;state.history=d.history;state.settings={...defaults,...(d.settings||{})};state.proposal=null;persist();try{await persistAndVerify()}catch(error){toast(error.message);return}closeModal();render();toast('Backup imported and verified in SQLite.')}
+function confirmClearData(){showModal(`<div class="modalhead"><h2>Clear all RIYA data?</h2><button class="iconbtn" onclick="closeModal()">✕</button></div><div class="notice dangertext">This permanently removes tasks, history and settings stored in this browser. Export a backup first if needed.</div><div class="actions"><button class="btn ghost" onclick="closeModal()">Cancel</button><button class="btn danger" onclick="clearData()">Clear all data</button></div>`)}
+async function clearData(){state={tab:'home',selectedDate:localISO(),calendarMonth:localISO().slice(0,7),tasks:[],history:[],settings:{...defaults},proposal:null,filter:'all',query:'',aiMessages:[],lastAiTasks:[]};localStorage.removeItem(STORE);if(!persist()){toast('Could not clear saved browser data.');return;}try{await persistAndVerify()}catch(error){toast(error.message);return}closeModal();render();toast('Local RIYA data cleared in browser and SQLite.')}
+function importData(e){const f=e.target.files?.[0];if(!f)return;const r=new FileReader();r.onload=()=>{try{const d=JSON.parse(r.result);if(d.app!=='RIYA'||!Array.isArray(d.tasks)||!Array.isArray(d.history))throw Error('Invalid RIYA backup');window.__riyaImport=d;showModal(`<div class="modalhead"><h2>Import backup?</h2><button class="iconbtn" onclick="closeModal()">✕</button></div><p>This replaces the tasks, history and settings currently stored in this browser.</p><div class="notice">Export your current data first if you want to keep it.</div><div class="actions"><button class="btn ghost" onclick="closeModal()">Cancel</button><button class="btn" onclick="applyImport(window.__riyaImport)">Import backup</button></div>`)}catch(err){toast(err.message||'Could not import backup')}};r.readAsText(f);e.target.value=''}
+// Conversation is handled by the local RIYA backend and Ollama; scheduling remains approval-driven.
+load();render();bootstrapDatabase();setInterval(checkReminders,30000);document.addEventListener('visibilitychange',()=>{if(!document.hidden)checkReminders()});
+// History is a first-class navigation screen.
+
+// RIYA composer keyboard behavior: Enter sends; Shift+Enter inserts a newline.
+document.addEventListener('keydown', function(event){
+ const target=event.target;
+ if(!target || target.id!=='riyaQuickNote' || event.isComposing) return;
+ if(event.key==='Enter' && !event.shiftKey && !event.ctrlKey && !event.altKey && !event.metaKey){
+  event.preventDefault();
+  if(typeof riyaCapture==='function') riyaCapture();
+ }
+});
+
+</script></body></html>
